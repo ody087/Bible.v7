@@ -10,76 +10,25 @@ const client = new Client({
   ]
 });
 
-const livresBibliques = [
-  { api: "Genesis", fr: "Genèse", chapters: 50 },
-  { api: "Exodus", fr: "Exode", chapters: 40 },
-  { api: "Leviticus", fr: "Lévitique", chapters: 27 },
-  { api: "Numbers", fr: "Nombres", chapters: 36 },
-  { api: "Deuteronomy", fr: "Deutéronome", chapters: 34 },
-  { api: "Joshua", fr: "Josué", chapters: 24 },
-  { api: "Judges", fr: "Juges", chapters: 21 },
-  { api: "Ruth", fr: "Ruth", chapters: 4 },
-  { api: "1 Samuel", fr: "1 Samuel", chapters: 31 },
-  { api: "2 Samuel", fr: "2 Samuel", chapters: 24 },
-  { api: "1 Kings", fr: "1 Rois", chapters: 22 },
-  { api: "2 Kings", fr: "2 Rois", chapters: 25 },
-  { api: "Psalms", fr: "Psaumes", chapters: 150 },
-  { api: "Proverbs", fr: "Proverbes", chapters: 31 },
-  { api: "Isaiah", fr: "Ésaïe", chapters: 66 },
-  { api: "Matthew", fr: "Matthieu", chapters: 28 },
-  { api: "Mark", fr: "Marc", chapters: 16 },
-  { api: "Luke", fr: "Luc", chapters: 24 },
-  { api: "John", fr: "Jean", chapters: 21 },
-  { api: "Acts", fr: "Actes", chapters: 28 },
-  { api: "Romans", fr: "Romains", chapters: 16 },
-  { api: "1 Corinthians", fr: "1 Corinthiens", chapters: 16 },
-  { api: "2 Corinthians", fr: "2 Corinthiens", chapters: 13 },
-  { api: "Galatians", fr: "Galates", chapters: 6 },
-  { api: "Ephesians", fr: "Éphésiens", chapters: 6 },
-  { api: "Philippians", fr: "Philippiens", chapters: 4 },
-  { api: "Colossians", fr: "Colossiens", chapters: 4 },
-  { api: "Hebrews", fr: "Hébreux", chapters: 13 },
-  { api: "James", fr: "Jacques", chapters: 5 },
-  { api: "1 Peter", fr: "1 Pierre", chapters: 5 },
-  { api: "2 Peter", fr: "2 Pierre", chapters: 3 },
-  { api: "1 John", fr: "1 Jean", chapters: 5 },
-  { api: "Revelation", fr: "Apocalypse", chapters: 22 }
-];
-
 const psaumes = [
-  {
-    text: "✨ Soyez encouragé, car Dieu est proche de vous même dans la douleur.\n\n📖 Dans Psaume 34:18, il est écrit :\n\n« L’Éternel est près de ceux qui ont le cœur brisé. »"
-  },
-  {
-    text: "✨ Recevez aujourd’hui la paix et la guérison que Dieu vous donne.\n\n📖 Dans Psaume 147:3, il est écrit :\n\n« Il guérit ceux qui ont le cœur brisé, et il panse leurs blessures. »"
-  },
-  {
-    text: "✨ Soyez fort, car Dieu combat pour vous et vous donne la victoire.\n\n📖 Dans Psaume 18:2, il est écrit :\n\n« L’Éternel est mon rocher, ma forteresse et mon libérateur. »"
-  },
-  {
-    text: "✨ N’ayez pas peur, Dieu veille sur vous jour et nuit.\n\n📖 Dans Psaume 91:1-2, il est écrit :\n\n« Celui qui demeure sous l’abri du Très-Haut repose à l’ombre du Tout-Puissant. »"
-  },
-  {
-    text: "✨ Que la paix de Dieu remplisse votre cœur aujourd’hui.\n\n📖 Dans Psaume 4:9, il est écrit :\n\n« Je me couche et je m’endors en paix, car toi seul, ô Éternel, tu me donnes la sécurité. »"
-  },
-  {
-    text: "✨ Prenez courage, Dieu est votre lumière et votre salut.\n\n📖 Dans Psaume 27:1, il est écrit :\n\n« L’Éternel est ma lumière et mon salut : de qui aurais-je crainte ? »"
-  },
-  {
-    text: "✨ Gardez espoir, votre secours vient de Dieu.\n\n📖 Dans Psaume 121:1-2, il est écrit :\n\n« Je lève mes yeux vers les montagnes… D’où me viendra le secours ? Le secours me vient de l’Éternel. »"
-  }
+  { text: "✨ Soyez encouragé, car Dieu est proche de vous même dans la douleur.\n\n📖 Dans Psaume 34:18, il est écrit :\n\n« L’Éternel est près de ceux qui ont le cœur brisé. »" },
+  { text: "✨ Recevez aujourd’hui la paix et la guérison que Dieu vous donne.\n\n📖 Dans Psaume 147:3, il est écrit :\n\n« Il guérit ceux qui ont le cœur brisé, et il panse leurs blessures. »" },
+  { text: "✨ Soyez fort, car Dieu combat pour vous et vous donne la victoire.\n\n📖 Dans Psaume 18:2, il est écrit :\n\n« L’Éternel est mon rocher, ma forteresse et mon libérateur. »" },
+  { text: "✨ N’ayez pas peur, Dieu veille sur vous jour et nuit.\n\n📖 Dans Psaume 91:1-2, il est écrit :\n\n« Celui qui demeure sous l’abri du Très-Haut repose à l’ombre du Tout-Puissant. »" },
+  { text: "✨ Que la paix de Dieu remplisse votre cœur aujourd’hui.\n\n📖 Dans Psaume 4:9, il est écrit :\n\n« Je me couche et je m’endors en paix, car toi seul, ô Éternel, tu me donnes la sécurité. »" },
+  { text: "✨ Prenez courage, Dieu est votre lumière et votre salut.\n\n📖 Dans Psaume 27:1, il est écrit :\n\n« L’Éternel est ma lumière et mon salut : de qui aurais-je crainte ? »" },
+  { text: "✨ Gardez espoir, votre secours vient de Dieu.\n\n📖 Dans Psaume 121:1-2, il est écrit :\n\n« Je lève mes yeux vers les montagnes… D’où me viendra le secours ? Le secours me vient de l’Éternel. »" }
 ];
 
 let lastPsalmIndex = -1;
 
 async function obtenirVersetAleatoire() {
-  const response = await axios.get(
-    "https://bible-api.com/data/lsg/random"
-  );
+  const response = await axios.get("https://bible-api.com/data/lsg/random");
+  const randomVerse = response.data.random_verse;
 
   return {
-    reference: response.data.random_verse.reference,
-    texte: response.data.random_verse.text.trim()
+    reference: randomVerse.reference || `${randomVerse.book} ${randomVerse.chapter}:${randomVerse.verse}`,
+    texte: randomVerse.text.trim()
   };
 }
 
@@ -91,11 +40,6 @@ async function envoyerVersetDuJour() {
   }
 
   const channel = await client.channels.fetch(channelId);
-
-  if (!channel) {
-    throw new Error("Salon introuvable. Vérifiez DAILY_VERSE_CHANNEL_ID.");
-  }
-
   const verset = await obtenirVersetAleatoire();
 
   await channel.send(
@@ -104,8 +48,6 @@ async function envoyerVersetDuJour() {
     `${verset.texte}\n\n` +
     `Que cette Parole fortifie votre journée 🙏`
   );
-
-  return true;
 }
 
 client.once('ready', () => {
@@ -116,7 +58,7 @@ client.once('ready', () => {
       await envoyerVersetDuJour();
       console.log("Verset du jour envoyé avec succès.");
     } catch (error) {
-      console.error("Erreur verset du jour :", error.message);
+      console.error("Erreur verset du jour :", error.response?.data || error.message);
     }
   }, {
     timezone: "America/New_York"
@@ -154,7 +96,7 @@ client.on('messageCreate', async message => {
       await envoyerVersetDuJour();
       message.reply("✅ Test du verset du jour envoyé dans le salon configuré.");
     } catch (error) {
-      console.error(error);
+      console.error("Erreur test verset du jour :", error.response?.data || error.message);
       message.reply(
         "❌ Le verset du jour n’a pas pu être envoyé.\n\n" +
         "Vérifiez :\n" +
@@ -173,10 +115,7 @@ client.on('messageCreate', async message => {
     } while (randomIndex === lastPsalmIndex);
 
     lastPsalmIndex = randomIndex;
-
-    const psaume = psaumes[randomIndex];
-
-    message.reply(psaume.text);
+    message.reply(psaumes[randomIndex].text);
   }
 
   if (msg.startsWith('!verset ')) {
@@ -187,9 +126,7 @@ client.on('messageCreate', async message => {
         `https://bible-api.com/${encodeURIComponent(reference)}?translation=lsg`
       );
 
-      const verseText = response.data.text;
-
-      message.reply(`📖 **${reference}**\n\n${verseText.trim()}`);
+      message.reply(`📖 **${reference}**\n\n${response.data.text.trim()}`);
     } catch (error) {
       message.reply(
         "🙏 Le verset demandé est introuvable.\n\n📖 Exemple : `!verset Jean 14:6`"
