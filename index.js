@@ -165,7 +165,7 @@ client.on('messageCreate', async message => {
       await envoyerVersetDuJour();
       message.reply("✅ Test du verset du jour envoyé dans le salon configuré.");
     } catch (error) {
-      console.error("Erreur test verset du jour :", error.message);
+      console.error(error);
       message.reply(
         "❌ Le verset du jour n’a pas pu être envoyé.\n\n" +
         "Vérifiez :\n" +
