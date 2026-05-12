@@ -44,13 +44,16 @@ client.on('messageCreate', async message => {
 
   const msg = message.content.toLowerCase();
 
+  // Bonjour
   if (msg === '!bonjour') {
     message.reply('Bonjour 👋 Que Dieu vous bénisse.');
   }
 
-  if (msg === '!aide') {
+  // Guide
+  if (msg === '!guide') {
     message.reply(
-      "📌 **Commandes Bible.v7**\n\n" +
+      "📌 **Guide Bible.v7**\n\n" +
+      "`!guide` — Voir le guide des commandes\n" +
       "`!bonjour` — Message de bénédiction\n" +
       "`!psaume` — Recevoir un psaume aléatoire\n" +
       "`!verset Jean 14:6` — Rechercher un verset biblique\n" +
@@ -63,6 +66,7 @@ client.on('messageCreate', async message => {
     );
   }
 
+  // Psaume aléatoire
   if (msg === '!psaume') {
     let randomIndex;
 
@@ -77,6 +81,7 @@ client.on('messageCreate', async message => {
     message.reply(psaume.text);
   }
 
+  // Verset
   if (msg.startsWith('!verset ')) {
     const reference = message.content.slice(8).trim();
 
@@ -97,6 +102,7 @@ client.on('messageCreate', async message => {
     }
   }
 
+  // Prière
   if (msg === '!priere') {
     message.reply(
       "🙏 **Prière**\n\n" +
@@ -104,6 +110,7 @@ client.on('messageCreate', async message => {
     );
   }
 
+  // Salut
   if (msg === '!jesus') {
     message.reply(
       "✝️ **L'ABC du SALUT**\n\n" +
@@ -136,6 +143,7 @@ client.on('messageCreate', async message => {
     );
   }
 
+  // Aide spirituelle
   if (msg === '!aide') {
     message.reply(
       "🙏 **Aide et soutien spirituel**\n\n" +
@@ -144,6 +152,7 @@ client.on('messageCreate', async message => {
     );
   }
 
+  // Suivi
   if (msg === '!suivi') {
     message.reply(
       "🤝 **Demande de suivi spirituel reçue**\n\n" +
@@ -152,6 +161,7 @@ client.on('messageCreate', async message => {
     );
   }
 
+  // Témoignage
   if (msg === '!temoignage') {
     message.reply(
       "🙌 **Témoignage**\n\n" +
@@ -160,6 +170,7 @@ client.on('messageCreate', async message => {
     );
   }
 
+  // Dévotion
   if (msg === '!devotion') {
     message.reply(
       "✨ **Dévotion du jour**\n\n" +
