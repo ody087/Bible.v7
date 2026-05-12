@@ -35,21 +35,16 @@ const psaumes = [
 ];
 
 const livres = [
-  "Genèse","Exode","Lévitique","Nombres","Deutéronome",
-  "Josué","Juges","Ruth","1 Samuel","2 Samuel",
-  "1 Rois","2 Rois","1 Chroniques","2 Chroniques",
-  "Esdras","Néhémie","Esther","Job","Psaume",
-  "Proverbes","Ecclésiaste","Cantique","Ésaïe","Jérémie",
-  "Lamentations","Ézéchiel","Daniel","Osée","Joël",
-  "Amos","Abdias","Jonas","Michée","Nahum",
-  "Habacuc","Sophonie","Aggée","Zacharie","Malachie",
-  "Matthieu","Marc","Luc","Jean","Actes",
-  "Romains","1 Corinthiens","2 Corinthiens","Galates",
-  "Éphésiens","Philippiens","Colossiens",
-  "1 Thessaloniciens","2 Thessaloniciens",
-  "1 Timothée","2 Timothée","Tite","Philémon",
-  "Hébreux","Jacques","1 Pierre","2 Pierre",
-  "1 Jean","2 Jean","3 Jean","Jude","Apocalypse"
+  "Genèse", "Exode", "Lévitique", "Nombres", "Deutéronome",
+  "Josué", "Juges", "Ruth", "1 Samuel", "2 Samuel",
+  "1 Rois", "2 Rois", "Psaume", "Proverbes", "Ésaïe",
+  "Jérémie", "Daniel", "Matthieu", "Marc", "Luc",
+  "Jean", "Actes", "Romains", "1 Corinthiens", "2 Corinthiens",
+  "Galates", "Éphésiens", "Philippiens", "Colossiens",
+  "1 Thessaloniciens", "2 Thessaloniciens", "1 Timothée",
+  "2 Timothée", "Tite", "Philémon", "Hébreux", "Jacques",
+  "1 Pierre", "2 Pierre", "1 Jean", "2 Jean", "3 Jean",
+  "Jude", "Apocalypse"
 ];
 
 let lastPsalmIndex = -1;
@@ -60,7 +55,6 @@ async function obtenirVersetAleatoire() {
       const livre = livres[Math.floor(Math.random() * livres.length)];
       const chapitre = Math.floor(Math.random() * 50) + 1;
       const verset = Math.floor(Math.random() * 30) + 1;
-
       const reference = `${livre} ${chapitre}:${verset}`;
 
       const response = await axios.get(
@@ -73,9 +67,8 @@ async function obtenirVersetAleatoire() {
           texte: response.data.text.trim()
         };
       }
-
     } catch (error) {
-      // retry automatiquement
+      // Réessaie automatiquement avec une autre référence
     }
   }
 }
@@ -83,8 +76,11 @@ async function obtenirVersetAleatoire() {
 async function envoyerVersetDuJour() {
   const channelId = process.env.DAILY_VERSE_CHANNEL_ID;
 
-  const channel = await client.channels.fetch(channelId);
+  if (!channelId) {
+    throw new Error("DAILY_VERSE_CHANNEL_ID n’est pas défini.");
+  }
 
+  const channel = await client.channels.fetch(channelId);
   const verset = await obtenirVersetAleatoire();
 
   await channel.send(
@@ -103,7 +99,7 @@ client.once('ready', () => {
       await envoyerVersetDuJour();
       console.log("Verset du jour envoyé.");
     } catch (error) {
-      console.error(error);
+      console.error("Erreur verset du jour :", error.message);
     }
   }, {
     timezone: "America/New_York"
@@ -141,7 +137,7 @@ client.on('messageCreate', async message => {
       await envoyerVersetDuJour();
       message.reply("✅ Verset du jour envoyé.");
     } catch (error) {
-      console.error(error);
+      console.error("Erreur test verset du jour :", error.message);
       message.reply("❌ Impossible d’envoyer le verset du jour.");
     }
   }
@@ -169,7 +165,6 @@ client.on('messageCreate', async message => {
       message.reply(
         `📖 **${reference}**\n\n${response.data.text.trim()}`
       );
-
     } catch (error) {
       message.reply(
         "🙏 Le verset demandé est introuvable.\n\n📖 Exemple : `!verset Jean 14:6`"
@@ -179,34 +174,61 @@ client.on('messageCreate', async message => {
 
   if (msg === '!priere') {
     message.reply(
-      "🙏 Seigneur Jésus, couvrez cette personne de votre paix et fortifiez sa foi. Amen."
+      "🙏 **Prière**\n\n" +
+      "Seigneur Jésus, couvrez cette personne de votre paix, guidez ses pas, fortifiez sa foi et remplissez son cœur de votre présence. Amen."
+    );
+  }
+
+  if (msg === '!jesus') {
+    message.reply(
+      "✝️ **L'ABC du SALUT**\n\n" +
+      "Le salut est simple et accessible à tous, mais c’est aussi un engagement sacré devant Dieu.\n\n" +
+      "**A — Admets que tu es un pécheur**\n" +
+      "Nous avons tous péché et nous avons besoin du pardon de Dieu.\n\n" +
+      "📖 Il est écrit dans **Romains 3:23** :\n" +
+      "« Car tous ont péché et sont privés de la gloire de Dieu. »\n\n" +
+      "**B — Crois en Jésus-Christ**\n" +
+      "Dieu vous aime. Jésus est mort pour vos péchés et il est ressuscité afin de vous donner la vie éternelle.\n\n" +
+      "📖 Il est écrit dans **Jean 3:16** :\n" +
+      "« Car Dieu a tant aimé le monde qu’il a donné son Fils unique, afin que quiconque croit en lui ne périsse point, mais qu’il ait la vie éternelle. »\n\n" +
+      "**C — Confesse que Jésus est Seigneur**\n" +
+      "Confessez Jésus-Christ comme Seigneur et Sauveur de votre vie.\n\n" +
+      "📖 Il est écrit dans **Romains 10:9** :\n" +
+      "« Si tu confesses de ta bouche le Seigneur Jésus et si tu crois dans ton cœur qu’il est ressuscité, tu seras sauvé. »\n\n" +
+      "🙏 **Prière à répéter à haute voix**\n\n" +
+      "Seigneur Jésus, je viens à vous aujourd’hui. Je reconnais que je suis pécheur et que j’ai besoin de votre pardon. Je crois que vous êtes mort pour mes péchés, que vous êtes ressuscité et que vous vivez éternellement. Je vous ouvre mon cœur. Pardonnez-moi, purifiez-moi, sauvez-moi et conduisez ma vie. Aujourd’hui, je confesse que Jésus-Christ est mon Seigneur et mon Sauveur. Amen.\n\n" +
+      "🤝 Si vous avez fait cette prière avec foi, écrivez `!suivi` afin que nous puissions vous accompagner spirituellement."
     );
   }
 
   if (msg === '!aide') {
     message.reply(
       "🙏 **Aide et soutien spirituel**\n\n" +
-      "Nous sommes là pour vous écouter, prier avec vous et vous encourager.\n\n" +
-      "🤝 Écrivez `!suivi` si vous souhaitez être accompagné."
+      "Nous sommes là pour vous écouter, prier avec vous et vous encourager dans votre marche avec Dieu.\n\n" +
+      "🙏 Vous pouvez aussi écrire `!suivi` si vous souhaitez être accompagné spirituellement."
     );
   }
 
   if (msg === '!suivi') {
     message.reply(
-      "🤝 Votre demande de suivi a été reçue.\n\n" +
-      "Un responsable pourra vous accompagner spirituellement."
+      "🤝 **Demande de suivi spirituel reçue**\n\n" +
+      "Merci d’avoir fait cette démarche. Un membre de l’équipe pourra vous accompagner, prier avec vous et vous aider à grandir dans votre marche avec Dieu.\n\n" +
+      "🙏 Vous pouvez aussi écrire un message privé à un responsable du serveur."
     );
   }
 
   if (msg === '!temoignage') {
     message.reply(
-      "🙌 Partagez votre témoignage pour encourager la communauté."
+      "🙌 **Témoignage**\n\n" +
+      "Si Dieu a fait quelque chose dans votre vie, vous pouvez le partager ici pour encourager la communauté.\n\n" +
+      "Votre témoignage peut fortifier la foi de quelqu’un d’autre. ✨"
     );
   }
 
   if (msg === '!devotion') {
     message.reply(
-      "✨ Aujourd’hui, avançons avec foi. Dieu marche devant nous."
+      "✨ **Dévotion du jour**\n\n" +
+      "Aujourd’hui, avançons avec foi. Même si nous ne voyons pas encore le chemin, Dieu marche devant nous. Faisons-lui confiance."
     );
   }
 });
