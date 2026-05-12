@@ -81,6 +81,11 @@ async function obtenirVersetAleatoire() {
   );
 
   const versets = response.data.verses;
+
+  if (!versets || versets.length === 0) {
+    throw new Error("Aucun verset trouvé.");
+  }
+
   const verset = versets[Math.floor(Math.random() * versets.length)];
 
   return {
@@ -90,33 +95,40 @@ async function obtenirVersetAleatoire() {
 }
 
 async function envoyerVersetDuJour() {
-  try {
-    const channelId = process.env.DAILY_VERSE_CHANNEL_ID;
+  const channelId = process.env.DAILY_VERSE_CHANNEL_ID;
 
-    if (!channelId) {
-      console.log("DAILY_VERSE_CHANNEL_ID n’est pas défini.");
-      return;
-    }
-
-    const channel = await client.channels.fetch(channelId);
-    const verset = await obtenirVersetAleatoire();
-
-    await channel.send(
-      `🌅 **Verset du jour**\n\n` +
-      `📖 **${verset.reference}**\n\n` +
-      `${verset.texte}\n\n` +
-      `Que cette Parole fortifie votre journée 🙏`
-    );
-  } catch (error) {
-    console.error("Erreur lors de l’envoi du verset du jour :", error.message);
+  if (!channelId) {
+    throw new Error("DAILY_VERSE_CHANNEL_ID n’est pas défini dans Railway.");
   }
+
+  const channel = await client.channels.fetch(channelId);
+
+  if (!channel) {
+    throw new Error("Salon introuvable. Vérifiez DAILY_VERSE_CHANNEL_ID.");
+  }
+
+  const verset = await obtenirVersetAleatoire();
+
+  await channel.send(
+    `🌅 **Verset du jour**\n\n` +
+    `📖 **${verset.reference}**\n\n` +
+    `${verset.texte}\n\n` +
+    `Que cette Parole fortifie votre journée 🙏`
+  );
+
+  return true;
 }
 
 client.once('ready', () => {
   console.log(`Bible.v7 est connecté en tant que ${client.user.tag}`);
 
-  cron.schedule('0 6 * * *', () => {
-    envoyerVersetDuJour();
+  cron.schedule('0 6 * * *', async () => {
+    try {
+      await envoyerVersetDuJour();
+      console.log("Verset du jour envoyé avec succès.");
+    } catch (error) {
+      console.error("Erreur verset du jour :", error.message);
+    }
   }, {
     timezone: "America/New_York"
   });
@@ -149,8 +161,19 @@ client.on('messageCreate', async message => {
   }
 
   if (msg === '!testversetdujour') {
-    envoyerVersetDuJour();
-    message.reply("✅ Test du verset du jour envoyé.");
+    try {
+      await envoyerVersetDuJour();
+      message.reply("✅ Test du verset du jour envoyé dans le salon configuré.");
+    } catch (error) {
+      console.error("Erreur test verset du jour :", error.message);
+      message.reply(
+        "❌ Le verset du jour n’a pas pu être envoyé.\n\n" +
+        "Vérifiez :\n" +
+        "1. La variable `DAILY_VERSE_CHANNEL_ID` dans Railway\n" +
+        "2. Les permissions du bot dans le salon\n" +
+        "3. Les logs Railway"
+      );
+    }
   }
 
   if (msg === '!psaume') {
