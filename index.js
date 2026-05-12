@@ -1,4 +1,5 @@
 const { Client, GatewayIntentBits } = require('discord.js');
+const axios = require('axios');
 
 const client = new Client({
   intents: [
@@ -10,32 +11,25 @@ const client = new Client({
 
 const psaumes = [
   {
-    category: "Réconfort",
-    text: "📖 **Psaume 34:18**\n\nL’Éternel est près de ceux qui ont le cœur brisé."
+    text: "✨ **Soyez encouragé, car Dieu est proche de vous même dans la douleur.**\n\n🙏 Dieu dit dans **Psaume 34:18** :\n\n📖 « L’Éternel est près de ceux qui ont le cœur brisé. »"
   },
   {
-    category: "Guérison",
-    text: "📖 **Psaume 147:3**\n\nIl guérit ceux qui ont le cœur brisé, et il panse leurs blessures."
+    text: "✨ **Recevez aujourd’hui la paix et la guérison que Dieu vous donne.**\n\n🙏 Dieu dit dans **Psaume 147:3** :\n\n📖 « Il guérit ceux qui ont le cœur brisé, et il panse leurs blessures. »"
   },
   {
-    category: "Victoire",
-    text: "📖 **Psaume 18:2**\n\nL’Éternel est mon rocher, ma forteresse et mon libérateur."
+    text: "✨ **Soyez fort, car Dieu combat pour vous et vous donne la victoire.**\n\n🙏 Dieu dit dans **Psaume 18:2** :\n\n📖 « L’Éternel est mon rocher, ma forteresse et mon libérateur. »"
   },
   {
-    category: "Protection",
-    text: "📖 **Psaume 91:1-2**\n\nCelui qui demeure sous l’abri du Très-Haut\nRepose à l’ombre du Tout-Puissant."
+    text: "✨ **N’ayez pas peur, Dieu veille sur vous jour et nuit.**\n\n🙏 Dieu dit dans **Psaume 91:1-2** :\n\n📖 « Celui qui demeure sous l’abri du Très-Haut repose à l’ombre du Tout-Puissant. »"
   },
   {
-    category: "Paix",
-    text: "📖 **Psaume 4:9**\n\nJe me couche et je m’endors en paix, car toi seul, ô Éternel, tu me donnes la sécurité."
+    text: "✨ **Que la paix de Dieu remplisse votre cœur aujourd’hui.**\n\n🙏 Dieu dit dans **Psaume 4:9** :\n\n📖 « Je me couche et je m’endors en paix, car toi seul, ô Éternel, tu me donnes la sécurité. »"
   },
   {
-    category: "Force",
-    text: "📖 **Psaume 27:1**\n\nL’Éternel est ma lumière et mon salut : de qui aurais-je crainte ?"
+    text: "✨ **Prenez courage, Dieu est votre lumière et votre salut.**\n\n🙏 Dieu dit dans **Psaume 27:1** :\n\n📖 « L’Éternel est ma lumière et mon salut : de qui aurais-je crainte ? »"
   },
   {
-    category: "Espoir",
-    text: "📖 **Psaume 121:1-2**\n\nJe lève mes yeux vers les montagnes… D’où me viendra le secours ?"
+    text: "✨ **Gardez espoir, votre secours vient de Dieu.**\n\n🙏 Dieu dit dans **Psaume 121:1-2** :\n\n📖 « Je lève mes yeux vers les montagnes… D’où me viendra le secours ? Le secours me vient de l’Éternel. »"
   }
 ];
 
@@ -45,7 +39,8 @@ client.once('ready', () => {
   console.log(`Bible.v7 est connecté en tant que ${client.user.tag}`);
 });
 
-client.on('messageCreate', message => {
+client.on('messageCreate', async message => {
+
   if (message.author.bot) return;
 
   const msg = message.content.toLowerCase();
@@ -59,9 +54,10 @@ client.on('messageCreate', message => {
       "📌 **Commandes Bible.v7**\n\n" +
       "`!bonjour` — Message de bénédiction\n" +
       "`!psaume` — Recevoir un psaume aléatoire\n" +
+      "`!verset Jean 14:6` — Rechercher un verset biblique\n" +
       "`!priere` — Recevoir une courte prière\n" +
       "`!jesus` — Message pour accepter Jésus-Christ\n" +
-      "`!besoin` — Demander de l’aide ou du soutien spirituel\n" +
+      "`!aide` — Recevoir de l’aide et du soutien spirituel\n" +
       "`!suivi` — Demander un accompagnement spirituel\n" +
       "`!temoignage` — Partager un témoignage\n" +
       "`!devotion` — Recevoir une courte dévotion"
@@ -69,6 +65,7 @@ client.on('messageCreate', message => {
   }
 
   if (msg === '!psaume') {
+
     let randomIndex;
 
     do {
@@ -79,9 +76,32 @@ client.on('messageCreate', message => {
 
     const psaume = psaumes[randomIndex];
 
-    message.reply(
-      `✨ **Psaume du jour — ${psaume.category}**\n\n${psaume.text}`
-    );
+    message.reply(psaume.text);
+  }
+
+  if (msg.startsWith('!verset ')) {
+
+    const reference = message.content.slice(8).trim();
+
+    try {
+
+      const response = await axios.get(
+        `https://bible-api.com/${encodeURIComponent(reference)}?translation=lsg`
+      );
+
+      const verseText = response.data.text;
+
+      message.reply(
+        `📖 **${reference}**\n\n${verseText}`
+      );
+
+    } catch (error) {
+
+      message.reply(
+        "🙏 Le verset demandé est introuvable. Veuillez vérifier la référence biblique et réessayer.\n\n📖 Exemple : `!verset Jean 14:6`"
+      );
+
+    }
   }
 
   if (msg === '!priere') {
@@ -96,15 +116,17 @@ client.on('messageCreate', message => {
       "✝️ **Recevoir Jésus-Christ**\n\n" +
       "Si vous voulez donner votre vie à Jésus-Christ, vous pouvez prier avec sincérité :\n\n" +
       "Seigneur Jésus, je viens à vous aujourd’hui. Je reconnais que j’ai besoin de vous. Je crois que vous êtes mort pour mes péchés et que Dieu vous a ressuscité. Pardonnez-moi, purifiez mon cœur et conduisez ma vie. Aujourd’hui, je vous accepte comme mon Seigneur et mon Sauveur. Amen.\n\n" +
+      "🙏 Dieu dit dans **Jean 14:6** :\n\n" +
+      "📖 « Jésus lui dit : Je suis le chemin, la vérité et la vie. Nul ne vient au Père que par moi. »\n\n" +
       "🙏 Si vous avez fait cette prière avec foi, écrivez `!suivi` pour recevoir un accompagnement spirituel."
     );
   }
 
-  if (msg === '!besoin') {
+  if (msg === '!aide') {
     message.reply(
-      "🙏 **Besoin de prière ou d’aide spirituelle**\n\n" +
-      "Nous sommes là pour vous écouter et prier avec vous.\n\n" +
-      "Vous pouvez partager votre demande dans le salon de prière ou écrire `!suivi` si vous souhaitez qu’un membre de l’équipe vous accompagne."
+      "🙏 **Aide et soutien spirituel**\n\n" +
+      "Nous sommes là pour vous écouter, prier avec vous et vous encourager dans votre marche avec Dieu.\n\n" +
+      "🙏 Vous pouvez aussi écrire `!suivi` si vous souhaitez être accompagné spirituellement."
     );
   }
 
@@ -130,6 +152,7 @@ client.on('messageCreate', message => {
       "Aujourd’hui, avançons avec foi. Même si nous ne voyons pas encore le chemin, Dieu marche devant nous. Faisons-lui confiance."
     );
   }
+
 });
 
 client.login(process.env.DISCORD_TOKEN);
