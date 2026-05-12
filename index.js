@@ -73,24 +73,13 @@ const psaumes = [
 let lastPsalmIndex = -1;
 
 async function obtenirVersetAleatoire() {
-  const livre = livresBibliques[Math.floor(Math.random() * livresBibliques.length)];
-  const chapitre = Math.floor(Math.random() * livre.chapters) + 1;
-
   const response = await axios.get(
-    `https://bible-api.com/${encodeURIComponent(`${livre.api} ${chapitre}`)}?translation=lsg`
+    "https://bible-api.com/data/lsg/random"
   );
 
-  const versets = response.data.verses;
-
-  if (!versets || versets.length === 0) {
-    throw new Error("Aucun verset trouvé.");
-  }
-
-  const verset = versets[Math.floor(Math.random() * versets.length)];
-
   return {
-    reference: `${livre.fr} ${chapitre}:${verset.verse}`,
-    texte: verset.text.trim()
+    reference: response.data.random_verse.reference,
+    texte: response.data.random_verse.text.trim()
   };
 }
 
