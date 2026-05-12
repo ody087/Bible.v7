@@ -11,42 +11,87 @@ const client = new Client({
 });
 
 const psaumes = [
-  { text: "✨ Soyez encouragé, car Dieu est proche de vous même dans la douleur.\n\n📖 Dans Psaume 34:18, il est écrit :\n\n« L’Éternel est près de ceux qui ont le cœur brisé. »" },
-  { text: "✨ Recevez aujourd’hui la paix et la guérison que Dieu vous donne.\n\n📖 Dans Psaume 147:3, il est écrit :\n\n« Il guérit ceux qui ont le cœur brisé, et il panse leurs blessures. »" },
-  { text: "✨ Soyez fort, car Dieu combat pour vous et vous donne la victoire.\n\n📖 Dans Psaume 18:2, il est écrit :\n\n« L’Éternel est mon rocher, ma forteresse et mon libérateur. »" },
-  { text: "✨ N’ayez pas peur, Dieu veille sur vous jour et nuit.\n\n📖 Dans Psaume 91:1-2, il est écrit :\n\n« Celui qui demeure sous l’abri du Très-Haut repose à l’ombre du Tout-Puissant. »" },
-  { text: "✨ Que la paix de Dieu remplisse votre cœur aujourd’hui.\n\n📖 Dans Psaume 4:9, il est écrit :\n\n« Je me couche et je m’endors en paix, car toi seul, ô Éternel, tu me donnes la sécurité. »" },
-  { text: "✨ Prenez courage, Dieu est votre lumière et votre salut.\n\n📖 Dans Psaume 27:1, il est écrit :\n\n« L’Éternel est ma lumière et mon salut : de qui aurais-je crainte ? »" },
-  { text: "✨ Gardez espoir, votre secours vient de Dieu.\n\n📖 Dans Psaume 121:1-2, il est écrit :\n\n« Je lève mes yeux vers les montagnes… D’où me viendra le secours ? Le secours me vient de l’Éternel. »" }
+  {
+    text: "✨ Soyez encouragé, car Dieu est proche de vous même dans la douleur.\n\n📖 Dans Psaume 34:18, il est écrit :\n\n« L’Éternel est près de ceux qui ont le cœur brisé. »"
+  },
+  {
+    text: "✨ Recevez aujourd’hui la paix et la guérison que Dieu vous donne.\n\n📖 Dans Psaume 147:3, il est écrit :\n\n« Il guérit ceux qui ont le cœur brisé, et il panse leurs blessures. »"
+  },
+  {
+    text: "✨ Soyez fort, car Dieu combat pour vous et vous donne la victoire.\n\n📖 Dans Psaume 18:2, il est écrit :\n\n« L’Éternel est mon rocher, ma forteresse et mon libérateur. »"
+  },
+  {
+    text: "✨ N’ayez pas peur, Dieu veille sur vous jour et nuit.\n\n📖 Dans Psaume 91:1-2, il est écrit :\n\n« Celui qui demeure sous l’abri du Très-Haut repose à l’ombre du Tout-Puissant. »"
+  },
+  {
+    text: "✨ Que la paix de Dieu remplisse votre cœur aujourd’hui.\n\n📖 Dans Psaume 4:9, il est écrit :\n\n« Je me couche et je m’endors en paix, car toi seul, ô Éternel, tu me donnes la sécurité. »"
+  },
+  {
+    text: "✨ Prenez courage, Dieu est votre lumière et votre salut.\n\n📖 Dans Psaume 27:1, il est écrit :\n\n« L’Éternel est ma lumière et mon salut : de qui aurais-je crainte ? »"
+  },
+  {
+    text: "✨ Gardez espoir, votre secours vient de Dieu.\n\n📖 Dans Psaume 121:1-2, il est écrit :\n\n« Je lève mes yeux vers les montagnes… D’où me viendra le secours ? Le secours me vient de l’Éternel. »"
+  }
+];
+
+const livres = [
+  "Genèse","Exode","Lévitique","Nombres","Deutéronome",
+  "Josué","Juges","Ruth","1 Samuel","2 Samuel",
+  "1 Rois","2 Rois","1 Chroniques","2 Chroniques",
+  "Esdras","Néhémie","Esther","Job","Psaume",
+  "Proverbes","Ecclésiaste","Cantique","Ésaïe","Jérémie",
+  "Lamentations","Ézéchiel","Daniel","Osée","Joël",
+  "Amos","Abdias","Jonas","Michée","Nahum",
+  "Habacuc","Sophonie","Aggée","Zacharie","Malachie",
+  "Matthieu","Marc","Luc","Jean","Actes",
+  "Romains","1 Corinthiens","2 Corinthiens","Galates",
+  "Éphésiens","Philippiens","Colossiens",
+  "1 Thessaloniciens","2 Thessaloniciens",
+  "1 Timothée","2 Timothée","Tite","Philémon",
+  "Hébreux","Jacques","1 Pierre","2 Pierre",
+  "1 Jean","2 Jean","3 Jean","Jude","Apocalypse"
 ];
 
 let lastPsalmIndex = -1;
 
 async function obtenirVersetAleatoire() {
-  const response = await axios.get("https://bible-api.com/data/lsg/random");
-  const randomVerse = response.data.random_verse;
+  while (true) {
+    try {
+      const livre = livres[Math.floor(Math.random() * livres.length)];
+      const chapitre = Math.floor(Math.random() * 50) + 1;
+      const verset = Math.floor(Math.random() * 30) + 1;
 
-  return {
-    reference: randomVerse.reference || `${randomVerse.book} ${randomVerse.chapter}:${randomVerse.verse}`,
-    texte: randomVerse.text.trim()
-  };
+      const reference = `${livre} ${chapitre}:${verset}`;
+
+      const response = await axios.get(
+        `https://bible-api.com/${encodeURIComponent(reference)}?translation=lsg`
+      );
+
+      if (response.data && response.data.text) {
+        return {
+          reference,
+          texte: response.data.text.trim()
+        };
+      }
+
+    } catch (error) {
+      // retry automatiquement
+    }
+  }
 }
 
 async function envoyerVersetDuJour() {
   const channelId = process.env.DAILY_VERSE_CHANNEL_ID;
 
-  if (!channelId) {
-    throw new Error("DAILY_VERSE_CHANNEL_ID n’est pas défini dans Railway.");
-  }
-
   const channel = await client.channels.fetch(channelId);
+
   const verset = await obtenirVersetAleatoire();
 
   await channel.send(
     `🌅 **Verset du jour**\n\n` +
     `📖 **${verset.reference}**\n\n` +
     `${verset.texte}\n\n` +
-    `Que cette Parole fortifie votre journée 🙏`
+    `🙏 Que cette Parole fortifie votre journée.`
   );
 }
 
@@ -56,9 +101,9 @@ client.once('ready', () => {
   cron.schedule('0 6 * * *', async () => {
     try {
       await envoyerVersetDuJour();
-      console.log("Verset du jour envoyé avec succès.");
+      console.log("Verset du jour envoyé.");
     } catch (error) {
-      console.error("Erreur verset du jour :", error.response?.data || error.message);
+      console.error(error);
     }
   }, {
     timezone: "America/New_York"
@@ -94,16 +139,10 @@ client.on('messageCreate', async message => {
   if (msg === '!testversetdujour') {
     try {
       await envoyerVersetDuJour();
-      message.reply("✅ Test du verset du jour envoyé dans le salon configuré.");
+      message.reply("✅ Verset du jour envoyé.");
     } catch (error) {
-      console.error("Erreur test verset du jour :", error.response?.data || error.message);
-      message.reply(
-        "❌ Le verset du jour n’a pas pu être envoyé.\n\n" +
-        "Vérifiez :\n" +
-        "1. La variable `DAILY_VERSE_CHANNEL_ID` dans Railway\n" +
-        "2. Les permissions du bot dans le salon\n" +
-        "3. Les logs Railway"
-      );
+      console.error(error);
+      message.reply("❌ Impossible d’envoyer le verset du jour.");
     }
   }
 
@@ -115,6 +154,7 @@ client.on('messageCreate', async message => {
     } while (randomIndex === lastPsalmIndex);
 
     lastPsalmIndex = randomIndex;
+
     message.reply(psaumes[randomIndex].text);
   }
 
@@ -126,7 +166,10 @@ client.on('messageCreate', async message => {
         `https://bible-api.com/${encodeURIComponent(reference)}?translation=lsg`
       );
 
-      message.reply(`📖 **${reference}**\n\n${response.data.text.trim()}`);
+      message.reply(
+        `📖 **${reference}**\n\n${response.data.text.trim()}`
+      );
+
     } catch (error) {
       message.reply(
         "🙏 Le verset demandé est introuvable.\n\n📖 Exemple : `!verset Jean 14:6`"
@@ -136,61 +179,34 @@ client.on('messageCreate', async message => {
 
   if (msg === '!priere') {
     message.reply(
-      "🙏 **Prière**\n\n" +
-      "Seigneur Jésus, couvrez cette personne de votre paix, guidez ses pas, fortifiez sa foi et remplissez son cœur de votre présence. Amen."
-    );
-  }
-
-  if (msg === '!jesus') {
-    message.reply(
-      "✝️ **L'ABC du SALUT**\n\n" +
-      "Le salut est simple et accessible à tous, mais c’est aussi un engagement sacré devant Dieu.\n\n" +
-      "**A — Admets que tu es un pécheur**\n" +
-      "Nous avons tous péché et nous avons besoin du pardon de Dieu.\n\n" +
-      "📖 Il est écrit dans **Romains 3:23** :\n" +
-      "« Car tous ont péché et sont privés de la gloire de Dieu. »\n\n" +
-      "**B — Crois en Jésus-Christ**\n" +
-      "Dieu vous aime. Jésus est mort pour vos péchés et il est ressuscité afin de vous donner la vie éternelle.\n\n" +
-      "📖 Il est écrit dans **Jean 3:16** :\n" +
-      "« Car Dieu a tant aimé le monde qu’il a donné son Fils unique, afin que quiconque croit en lui ne périsse point, mais qu’il ait la vie éternelle. »\n\n" +
-      "**C — Confesse que Jésus est Seigneur**\n" +
-      "Confessez Jésus-Christ comme Seigneur et Sauveur de votre vie.\n\n" +
-      "📖 Il est écrit dans **Romains 10:9** :\n" +
-      "« Si tu confesses de ta bouche le Seigneur Jésus et si tu crois dans ton cœur qu’il est ressuscité, tu seras sauvé. »\n\n" +
-      "🙏 **Prière à répéter à haute voix**\n\n" +
-      "Seigneur Jésus, je viens à vous aujourd’hui. Je reconnais que je suis pécheur et que j’ai besoin de votre pardon. Je crois que vous êtes mort pour mes péchés, que vous êtes ressuscité et que vous vivez éternellement. Je vous ouvre mon cœur. Pardonnez-moi, purifiez-moi, sauvez-moi et conduisez ma vie. Aujourd’hui, je confesse que Jésus-Christ est mon Seigneur et mon Sauveur. Amen.\n\n" +
-      "🤝 Si vous avez fait cette prière avec foi, écrivez `!suivi` afin que nous puissions vous accompagner spirituellement."
+      "🙏 Seigneur Jésus, couvrez cette personne de votre paix et fortifiez sa foi. Amen."
     );
   }
 
   if (msg === '!aide') {
     message.reply(
       "🙏 **Aide et soutien spirituel**\n\n" +
-      "Nous sommes là pour vous écouter, prier avec vous et vous encourager dans votre marche avec Dieu.\n\n" +
-      "🙏 Vous pouvez aussi écrire `!suivi` si vous souhaitez être accompagné spirituellement."
+      "Nous sommes là pour vous écouter, prier avec vous et vous encourager.\n\n" +
+      "🤝 Écrivez `!suivi` si vous souhaitez être accompagné."
     );
   }
 
   if (msg === '!suivi') {
     message.reply(
-      "🤝 **Demande de suivi spirituel reçue**\n\n" +
-      "Merci d’avoir fait cette démarche. Un membre de l’équipe pourra vous accompagner, prier avec vous et vous aider à grandir dans votre marche avec Dieu.\n\n" +
-      "🙏 Vous pouvez aussi écrire un message privé à un responsable du serveur."
+      "🤝 Votre demande de suivi a été reçue.\n\n" +
+      "Un responsable pourra vous accompagner spirituellement."
     );
   }
 
   if (msg === '!temoignage') {
     message.reply(
-      "🙌 **Témoignage**\n\n" +
-      "Si Dieu a fait quelque chose dans votre vie, vous pouvez le partager ici pour encourager la communauté.\n\n" +
-      "Votre témoignage peut fortifier la foi de quelqu’un d’autre. ✨"
+      "🙌 Partagez votre témoignage pour encourager la communauté."
     );
   }
 
   if (msg === '!devotion') {
     message.reply(
-      "✨ **Dévotion du jour**\n\n" +
-      "Aujourd’hui, avançons avec foi. Même si nous ne voyons pas encore le chemin, Dieu marche devant nous. Faisons-lui confiance."
+      "✨ Aujourd’hui, avançons avec foi. Dieu marche devant nous."
     );
   }
 });
