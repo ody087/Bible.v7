@@ -9,7 +9,7 @@ const client = new Client({
   ]
 });
 
- const psaumes = [
+const psaumes = [
   {
     text: "✨ Soyez encouragé, car Dieu est proche de vous même dans la douleur.\n\n📖 Dans Psaume 34:18, il est écrit :\n\n« L’Éternel est près de ceux qui ont le cœur brisé. »"
   },
@@ -30,8 +30,6 @@ const client = new Client({
   },
   {
     text: "✨ Gardez espoir, votre secours vient de Dieu.\n\n📖 Dans Psaume 121:1-2, il est écrit :\n\n« Je lève mes yeux vers les montagnes… D’où me viendra le secours ? Le secours me vient de l’Éternel. »"
-  }
-];
   }
 ];
 
@@ -58,7 +56,7 @@ client.on('messageCreate', async message => {
       "`!psaume` — Recevoir un psaume aléatoire\n" +
       "`!verset Jean 14:6` — Rechercher un verset biblique\n" +
       "`!priere` — Recevoir une courte prière\n" +
-      "`!jesus` — Message pour accepter Jésus-Christ\n" +
+      "`!jesus` — Recevoir le message du salut\n" +
       "`!aide` — Recevoir de l’aide et du soutien spirituel\n" +
       "`!suivi` — Demander un accompagnement spirituel\n" +
       "`!temoignage` — Partager un témoignage\n" +
@@ -116,11 +114,30 @@ client.on('messageCreate', async message => {
   if (msg === '!jesus') {
     message.reply(
       "✝️ **Recevoir Jésus-Christ**\n\n" +
-      "Si vous voulez donner votre vie à Jésus-Christ, vous pouvez prier avec sincérité :\n\n" +
-      "Seigneur Jésus, je viens à vous aujourd’hui. Je reconnais que j’ai besoin de vous. Je crois que vous êtes mort pour mes péchés et que Dieu vous a ressuscité. Pardonnez-moi, purifiez mon cœur et conduisez ma vie. Aujourd’hui, je vous accepte comme mon Seigneur et mon Sauveur. Amen.\n\n" +
-      "🙏 Dieu dit dans **Jean 14:6** :\n\n" +
-      "📖 « Jésus lui dit : Je suis le chemin, la vérité et la vie. Nul ne vient au Père que par moi. »\n\n" +
-      "🙏 Si vous avez fait cette prière avec foi, écrivez `!suivi` pour recevoir un accompagnement spirituel."
+
+      "**A — Admets que tu es un pécheur**\n" +
+      "Nous avons tous péché et nous avons besoin du pardon de Dieu.\n\n" +
+
+      "📖 Il est écrit dans **Romains 3:23** :\n" +
+      "« Car tous ont péché et sont privés de la gloire de Dieu. »\n\n" +
+
+      "**B — Crois en Jésus**\n" +
+      "Dieu vous aime. Jésus est mort pour vos péchés et il est ressuscité afin de vous donner la vie éternelle.\n\n" +
+
+      "📖 Il est écrit dans **Jean 3:16** :\n" +
+      "« Car Dieu a tant aimé le monde qu’il a donné son Fils unique, afin que quiconque croit en lui ne périsse point, mais qu’il ait la vie éternelle. »\n\n" +
+
+      "**C — Confesse que Jésus est Seigneur**\n" +
+      "Confessez Jésus comme Seigneur et Sauveur de votre vie.\n\n" +
+
+      "📖 Il est écrit dans **Romains 10:9** :\n" +
+      "« Si tu confesses de ta bouche le Seigneur Jésus, et si tu crois dans ton cœur que Dieu l’a ressuscité des morts, tu seras sauvé. »\n\n" +
+
+      "🙏 **Prière à répéter à haute voix**\n\n" +
+
+      "Seigneur Jésus, je viens à vous aujourd’hui. Je reconnais que je suis pécheur et que j’ai besoin de votre pardon. Je crois que vous êtes mort pour mes péchés et que Dieu vous a ressuscité des morts. Je vous ouvre mon cœur. Pardonnez-moi, purifiez-moi, sauvez-moi et conduisez ma vie. Aujourd’hui, je confesse que Jésus-Christ est mon Seigneur et mon Sauveur. Amen.\n\n" +
+
+      "🤝 Si vous avez fait cette prière avec foi, écrivez `!suivi` afin que nous puissions vous accompagner spirituellement."
     );
   }
 
