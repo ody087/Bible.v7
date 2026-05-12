@@ -9,27 +9,29 @@ const client = new Client({
   ]
 });
 
-const psaumes = [
+ const psaumes = [
   {
-    text: "✨ **Soyez encouragé, car Dieu est proche de vous même dans la douleur.**\n\n🙏 Dieu dit dans **Psaume 34:18** :\n\n📖 « L’Éternel est près de ceux qui ont le cœur brisé. »"
+    text: "✨ Soyez encouragé, car Dieu est proche de vous même dans la douleur.\n\n📖 Dans Psaume 34:18, il est écrit :\n\n« L’Éternel est près de ceux qui ont le cœur brisé. »"
   },
   {
-    text: "✨ **Recevez aujourd’hui la paix et la guérison que Dieu vous donne.**\n\n🙏 Dieu dit dans **Psaume 147:3** :\n\n📖 « Il guérit ceux qui ont le cœur brisé, et il panse leurs blessures. »"
+    text: "✨ Recevez aujourd’hui la paix et la guérison que Dieu vous donne.\n\n📖 Dans Psaume 147:3, il est écrit :\n\n« Il guérit ceux qui ont le cœur brisé, et il panse leurs blessures. »"
   },
   {
-    text: "✨ **Soyez fort, car Dieu combat pour vous et vous donne la victoire.**\n\n🙏 Dieu dit dans **Psaume 18:2** :\n\n📖 « L’Éternel est mon rocher, ma forteresse et mon libérateur. »"
+    text: "✨ Soyez fort, car Dieu combat pour vous et vous donne la victoire.\n\n📖 Dans Psaume 18:2, il est écrit :\n\n« L’Éternel est mon rocher, ma forteresse et mon libérateur. »"
   },
   {
-    text: "✨ **N’ayez pas peur, Dieu veille sur vous jour et nuit.**\n\n🙏 Dieu dit dans **Psaume 91:1-2** :\n\n📖 « Celui qui demeure sous l’abri du Très-Haut repose à l’ombre du Tout-Puissant. »"
+    text: "✨ N’ayez pas peur, Dieu veille sur vous jour et nuit.\n\n📖 Dans Psaume 91:1-2, il est écrit :\n\n« Celui qui demeure sous l’abri du Très-Haut repose à l’ombre du Tout-Puissant. »"
   },
   {
-    text: "✨ **Que la paix de Dieu remplisse votre cœur aujourd’hui.**\n\n🙏 Dieu dit dans **Psaume 4:9** :\n\n📖 « Je me couche et je m’endors en paix, car toi seul, ô Éternel, tu me donnes la sécurité. »"
+    text: "✨ Que la paix de Dieu remplisse votre cœur aujourd’hui.\n\n📖 Dans Psaume 4:9, il est écrit :\n\n« Je me couche et je m’endors en paix, car toi seul, ô Éternel, tu me donnes la sécurité. »"
   },
   {
-    text: "✨ **Prenez courage, Dieu est votre lumière et votre salut.**\n\n🙏 Dieu dit dans **Psaume 27:1** :\n\n📖 « L’Éternel est ma lumière et mon salut : de qui aurais-je crainte ? »"
+    text: "✨ Prenez courage, Dieu est votre lumière et votre salut.\n\n📖 Dans Psaume 27:1, il est écrit :\n\n« L’Éternel est ma lumière et mon salut : de qui aurais-je crainte ? »"
   },
   {
-    text: "✨ **Gardez espoir, votre secours vient de Dieu.**\n\n🙏 Dieu dit dans **Psaume 121:1-2** :\n\n📖 « Je lève mes yeux vers les montagnes… D’où me viendra le secours ? Le secours me vient de l’Éternel. »"
+    text: "✨ Gardez espoir, votre secours vient de Dieu.\n\n📖 Dans Psaume 121:1-2, il est écrit :\n\n« Je lève mes yeux vers les montagnes… D’où me viendra le secours ? Le secours me vient de l’Éternel. »"
+  }
+];
   }
 ];
 
