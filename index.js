@@ -40,6 +40,7 @@ client.once('ready', () => {
 });
 
 client.on('messageCreate', async message => {
+
   if (message.author.bot) return;
 
   const msg = message.content.toLowerCase();
@@ -68,6 +69,7 @@ client.on('messageCreate', async message => {
 
   // Psaume aléatoire
   if (msg === '!psaume') {
+
     let randomIndex;
 
     do {
@@ -81,11 +83,13 @@ client.on('messageCreate', async message => {
     message.reply(psaume.text);
   }
 
-  // Verset
+  // Recherche de verset
   if (msg.startsWith('!verset ')) {
+
     const reference = message.content.slice(8).trim();
 
     try {
+
       const response = await axios.get(
         `https://bible-api.com/${encodeURIComponent(reference)}?translation=lsg`
       );
@@ -93,12 +97,15 @@ client.on('messageCreate', async message => {
       const verseText = response.data.text;
 
       message.reply(
-        `📖 **${reference}**\n\n${verseText}`
+        `📖 **${reference}**\n\n${verseText.trim()}`
       );
+
     } catch (error) {
+
       message.reply(
-        "🙏 Le verset demandé est introuvable. Veuillez vérifier la référence biblique et réessayer.\n\n📖 Exemple : `!verset Jean 14:6`"
+        "🙏 Le verset demandé est introuvable.\n\n📖 Exemple : `!verset Jean 14:6`"
       );
+
     }
   }
 
@@ -177,6 +184,7 @@ client.on('messageCreate', async message => {
       "Aujourd’hui, avançons avec foi. Même si nous ne voyons pas encore le chemin, Dieu marche devant nous. Faisons-lui confiance."
     );
   }
+
 });
 
 client.login(process.env.DISCORD_TOKEN);
