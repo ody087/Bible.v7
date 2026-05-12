@@ -1,12 +1,13 @@
 {
   "name": "bible-v7-bot",
   "version": "1.0.0",
-  "description": "Bot Discord chrétien",
+  "description": "Bot Discord chrétien pour versets bibliques, prières, louange et soutien spirituel.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "discord.js": "^14.15.3"
+    "discord.js": "^14.15.3",
+    "axios": "^1.7.9"
   }
 }
