@@ -40,7 +40,6 @@ client.once('ready', () => {
 });
 
 client.on('messageCreate', async message => {
-
   if (message.author.bot) return;
 
   const msg = message.content.toLowerCase();
@@ -65,7 +64,6 @@ client.on('messageCreate', async message => {
   }
 
   if (msg === '!psaume') {
-
     let randomIndex;
 
     do {
@@ -80,11 +78,9 @@ client.on('messageCreate', async message => {
   }
 
   if (msg.startsWith('!verset ')) {
-
     const reference = message.content.slice(8).trim();
 
     try {
-
       const response = await axios.get(
         `https://bible-api.com/${encodeURIComponent(reference)}?translation=lsg`
       );
@@ -94,13 +90,10 @@ client.on('messageCreate', async message => {
       message.reply(
         `📖 **${reference}**\n\n${verseText}`
       );
-
     } catch (error) {
-
       message.reply(
         "🙏 Le verset demandé est introuvable. Veuillez vérifier la référence biblique et réessayer.\n\n📖 Exemple : `!verset Jean 14:6`"
       );
-
     }
   }
 
@@ -113,7 +106,9 @@ client.on('messageCreate', async message => {
 
   if (msg === '!jesus') {
     message.reply(
-      "✝️ **Recevoir Jésus-Christ**\n\n" +
+      "✝️ **L'ABC du SALUT**\n\n" +
+
+      "Le salut est simple et accessible à tous, mais c’est aussi un engagement sacré devant Dieu.\n\n" +
 
       "**A — Admets que tu es un pécheur**\n" +
       "Nous avons tous péché et nous avons besoin du pardon de Dieu.\n\n" +
@@ -121,21 +116,21 @@ client.on('messageCreate', async message => {
       "📖 Il est écrit dans **Romains 3:23** :\n" +
       "« Car tous ont péché et sont privés de la gloire de Dieu. »\n\n" +
 
-      "**B — Crois en Jésus**\n" +
+      "**B — Crois en Jésus-Christ**\n" +
       "Dieu vous aime. Jésus est mort pour vos péchés et il est ressuscité afin de vous donner la vie éternelle.\n\n" +
 
       "📖 Il est écrit dans **Jean 3:16** :\n" +
       "« Car Dieu a tant aimé le monde qu’il a donné son Fils unique, afin que quiconque croit en lui ne périsse point, mais qu’il ait la vie éternelle. »\n\n" +
 
       "**C — Confesse que Jésus est Seigneur**\n" +
-      "Confessez Jésus comme Seigneur et Sauveur de votre vie.\n\n" +
+      "Confessez Jésus-Christ comme Seigneur et Sauveur de votre vie.\n\n" +
 
       "📖 Il est écrit dans **Romains 10:9** :\n" +
-      "« Si tu confesses de ta bouche le Seigneur Jésus, et si tu crois dans ton cœur que Dieu l’a ressuscité des morts, tu seras sauvé. »\n\n" +
+      "« Si tu confesses de ta bouche le Seigneur Jésus et si tu crois dans ton cœur qu’il est ressuscité, tu seras sauvé. »\n\n" +
 
       "🙏 **Prière à répéter à haute voix**\n\n" +
 
-      "Seigneur Jésus, je viens à vous aujourd’hui. Je reconnais que je suis pécheur et que j’ai besoin de votre pardon. Je crois que vous êtes mort pour mes péchés et que Dieu vous a ressuscité des morts. Je vous ouvre mon cœur. Pardonnez-moi, purifiez-moi, sauvez-moi et conduisez ma vie. Aujourd’hui, je confesse que Jésus-Christ est mon Seigneur et mon Sauveur. Amen.\n\n" +
+      "Seigneur Jésus, je viens à vous aujourd’hui. Je reconnais que je suis pécheur et que j’ai besoin de votre pardon. Je crois que vous êtes mort pour mes péchés, que vous êtes ressuscité et que vous vivez éternellement. Je vous ouvre mon cœur. Pardonnez-moi, purifiez-moi, sauvez-moi et conduisez ma vie. Aujourd’hui, je confesse que Jésus-Christ est mon Seigneur et mon Sauveur. Amen.\n\n" +
 
       "🤝 Si vous avez fait cette prière avec foi, écrivez `!suivi` afin que nous puissions vous accompagner spirituellement."
     );
@@ -171,7 +166,6 @@ client.on('messageCreate', async message => {
       "Aujourd’hui, avançons avec foi. Même si nous ne voyons pas encore le chemin, Dieu marche devant nous. Faisons-lui confiance."
     );
   }
-
 });
 
 client.login(process.env.DISCORD_TOKEN);
