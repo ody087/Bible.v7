@@ -1,6 +1,5 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const axios = require('axios');
-const cron = require('node-cron');
 
 const client = new Client({
   intents: [
@@ -34,87 +33,24 @@ const psaumes = [
   }
 ];
 
-const livres = [
-  "Genèse", "Exode", "Lévitique", "Nombres", "Deutéronome",
-  "Josué", "Juges", "Ruth", "1 Samuel", "2 Samuel",
-  "1 Rois", "2 Rois", "Psaume", "Proverbes", "Ésaïe",
-  "Jérémie", "Daniel", "Matthieu", "Marc", "Luc",
-  "Jean", "Actes", "Romains", "1 Corinthiens", "2 Corinthiens",
-  "Galates", "Éphésiens", "Philippiens", "Colossiens",
-  "1 Thessaloniciens", "2 Thessaloniciens", "1 Timothée",
-  "2 Timothée", "Tite", "Philémon", "Hébreux", "Jacques",
-  "1 Pierre", "2 Pierre", "1 Jean", "2 Jean", "3 Jean",
-  "Jude", "Apocalypse"
-];
-
 let lastPsalmIndex = -1;
-
-async function obtenirVersetAleatoire() {
-  while (true) {
-    try {
-      const livre = livres[Math.floor(Math.random() * livres.length)];
-      const chapitre = Math.floor(Math.random() * 50) + 1;
-      const verset = Math.floor(Math.random() * 30) + 1;
-      const reference = `${livre} ${chapitre}:${verset}`;
-
-      const response = await axios.get(
-        `https://bible-api.com/${encodeURIComponent(reference)}?translation=lsg`
-      );
-
-      if (response.data && response.data.text) {
-        return {
-          reference,
-          texte: response.data.text.trim()
-        };
-      }
-    } catch (error) {
-      // Réessaie automatiquement avec une autre référence
-    }
-  }
-}
-
-async function envoyerVersetDuJour() {
-  const channelId = process.env.DAILY_VERSE_CHANNEL_ID;
-
-  if (!channelId) {
-    throw new Error("DAILY_VERSE_CHANNEL_ID n’est pas défini.");
-  }
-
-  const channel = await client.channels.fetch(channelId);
-  const verset = await obtenirVersetAleatoire();
-
-  await channel.send(
-    `🌅 **Verset du jour**\n\n` +
-    `📖 **${verset.reference}**\n\n` +
-    `${verset.texte}\n\n` +
-    `🙏 Que cette Parole fortifie votre journée.`
-  );
-}
 
 client.once('ready', () => {
   console.log(`Bible.v7 est connecté en tant que ${client.user.tag}`);
-
-  cron.schedule('0 6 * * *', async () => {
-    try {
-      await envoyerVersetDuJour();
-      console.log("Verset du jour envoyé.");
-    } catch (error) {
-      console.error("Erreur verset du jour :", error.message);
-    }
-  }, {
-    timezone: "America/New_York"
-  });
 });
 
 client.on('messageCreate', async message => {
+
   if (message.author.bot) return;
 
   const msg = message.content.toLowerCase();
 
+  // Bonjour
   if (msg === '!bonjour') {
     message.reply('Bonjour 👋 Que Dieu vous bénisse.');
   }
 
+  // Guide
   if (msg === '!guide') {
     message.reply(
       "📌 **Guide Bible.v7**\n\n" +
@@ -127,22 +63,13 @@ client.on('messageCreate', async message => {
       "`!aide` — Recevoir de l’aide et du soutien spirituel\n" +
       "`!suivi` — Demander un accompagnement spirituel\n" +
       "`!temoignage` — Partager un témoignage\n" +
-      "`!devotion` — Recevoir une courte dévotion\n" +
-      "`!testversetdujour` — Tester le verset du jour"
+      "`!devotion` — Recevoir une courte dévotion"
     );
   }
 
-  if (msg === '!testversetdujour') {
-    try {
-      await envoyerVersetDuJour();
-      message.reply("✅ Verset du jour envoyé.");
-    } catch (error) {
-      console.error("Erreur test verset du jour :", error.message);
-      message.reply("❌ Impossible d’envoyer le verset du jour.");
-    }
-  }
-
+  // Psaume aléatoire
   if (msg === '!psaume') {
+
     let randomIndex;
 
     do {
@@ -154,10 +81,13 @@ client.on('messageCreate', async message => {
     message.reply(psaumes[randomIndex].text);
   }
 
+  // Recherche de verset
   if (msg.startsWith('!verset ')) {
+
     const reference = message.content.slice(8).trim();
 
     try {
+
       const response = await axios.get(
         `https://bible-api.com/${encodeURIComponent(reference)}?translation=lsg`
       );
@@ -165,13 +95,17 @@ client.on('messageCreate', async message => {
       message.reply(
         `📖 **${reference}**\n\n${response.data.text.trim()}`
       );
+
     } catch (error) {
+
       message.reply(
         "🙏 Le verset demandé est introuvable.\n\n📖 Exemple : `!verset Jean 14:6`"
       );
+
     }
   }
 
+  // Prière
   if (msg === '!priere') {
     message.reply(
       "🙏 **Prière**\n\n" +
@@ -179,28 +113,40 @@ client.on('messageCreate', async message => {
     );
   }
 
+  // Salut
   if (msg === '!jesus') {
     message.reply(
       "✝️ **L'ABC du SALUT**\n\n" +
+
       "Le salut est simple et accessible à tous, mais c’est aussi un engagement sacré devant Dieu.\n\n" +
+
       "**A — Admets que tu es un pécheur**\n" +
       "Nous avons tous péché et nous avons besoin du pardon de Dieu.\n\n" +
+
       "📖 Il est écrit dans **Romains 3:23** :\n" +
       "« Car tous ont péché et sont privés de la gloire de Dieu. »\n\n" +
+
       "**B — Crois en Jésus-Christ**\n" +
       "Dieu vous aime. Jésus est mort pour vos péchés et il est ressuscité afin de vous donner la vie éternelle.\n\n" +
+
       "📖 Il est écrit dans **Jean 3:16** :\n" +
       "« Car Dieu a tant aimé le monde qu’il a donné son Fils unique, afin que quiconque croit en lui ne périsse point, mais qu’il ait la vie éternelle. »\n\n" +
+
       "**C — Confesse que Jésus est Seigneur**\n" +
       "Confessez Jésus-Christ comme Seigneur et Sauveur de votre vie.\n\n" +
+
       "📖 Il est écrit dans **Romains 10:9** :\n" +
       "« Si tu confesses de ta bouche le Seigneur Jésus et si tu crois dans ton cœur qu’il est ressuscité, tu seras sauvé. »\n\n" +
+
       "🙏 **Prière à répéter à haute voix**\n\n" +
+
       "Seigneur Jésus, je viens à vous aujourd’hui. Je reconnais que je suis pécheur et que j’ai besoin de votre pardon. Je crois que vous êtes mort pour mes péchés, que vous êtes ressuscité et que vous vivez éternellement. Je vous ouvre mon cœur. Pardonnez-moi, purifiez-moi, sauvez-moi et conduisez ma vie. Aujourd’hui, je confesse que Jésus-Christ est mon Seigneur et mon Sauveur. Amen.\n\n" +
+
       "🤝 Si vous avez fait cette prière avec foi, écrivez `!suivi` afin que nous puissions vous accompagner spirituellement."
     );
   }
 
+  // Aide spirituelle
   if (msg === '!aide') {
     message.reply(
       "🙏 **Aide et soutien spirituel**\n\n" +
@@ -209,6 +155,7 @@ client.on('messageCreate', async message => {
     );
   }
 
+  // Suivi
   if (msg === '!suivi') {
     message.reply(
       "🤝 **Demande de suivi spirituel reçue**\n\n" +
@@ -217,6 +164,7 @@ client.on('messageCreate', async message => {
     );
   }
 
+  // Témoignage
   if (msg === '!temoignage') {
     message.reply(
       "🙌 **Témoignage**\n\n" +
@@ -225,12 +173,14 @@ client.on('messageCreate', async message => {
     );
   }
 
+  // Dévotion
   if (msg === '!devotion') {
     message.reply(
       "✨ **Dévotion du jour**\n\n" +
       "Aujourd’hui, avançons avec foi. Même si nous ne voyons pas encore le chemin, Dieu marche devant nous. Faisons-lui confiance."
     );
   }
+
 });
 
 client.login(process.env.DISCORD_TOKEN);
