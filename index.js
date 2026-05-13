@@ -529,15 +529,13 @@ const twitchClient = new tmi.Client({
 
 twitchClient.connect();
 
-twitchClient.on('message', async (channel, tags, message, self) => {
-  if (self) return;
+function cleanTwitch(text) {
+  return text.replace(/\n/g, ' ').slice(0, 450);
+}
 
-  const msg = message.toLowerCase();
+function lancerQuizTwitch(channel) {
+  if (twitchQuizActif) return;
 
-twitchMessageCount++;
-
-if (twitchMessageCount >= 5 && !twitchQuizActif) {
-  twitchMessageCount = 0;
   twitchQuizActif = true;
 
   const random = quizzes[Math.floor(Math.random() * quizzes.length)];
@@ -552,12 +550,13 @@ if (twitchMessageCount >= 5 && !twitchQuizActif) {
 
   twitchClient.say(
     channel,
-    `📖 Quiz Biblique Automatique : ${random.question} | A: ${random.options[0]} | B: ${random.options[1]} | C: ${random.options[2]} | D: ${random.options[3]} | Vous avez 30 secondes.`
+    `📖 Quiz Biblique : ${random.question} | A: ${random.options[0]} | B: ${random.options[1]} | C: ${random.options[2]} | D: ${random.options[3]} | Vous avez 30 secondes.`
   );
 
   const quizListener = (quizChannel, tags, userMessage, self) => {
     if (self) return;
     if (quizChannel !== channel) return;
+    if (userMessage.startsWith('!')) return;
 
     const response = userMessage.trim().toLowerCase();
 
@@ -566,23 +565,21 @@ if (twitchMessageCount >= 5 && !twitchQuizActif) {
         channel,
         `✅ Yes, bonne réponse @${tags.username} ! 📖 Référence : ${random.reference}`
       );
-
-      twitchClient.removeListener('message', quizListener);
-      twitchQuizActif = false;
-    } else if (["a", "b", "c", "d"].includes(response)) {
+    } else {
       twitchClient.say(
         channel,
         `❌ Mauvaise réponse @${tags.username}. ✅ Réponse : ${random.answer} | 📖 Référence : ${random.reference}`
       );
-
-      twitchClient.removeListener('message', quizListener);
-      twitchQuizActif = false;
     }
+
+    clearTimeout(timer);
+    twitchClient.removeListener('message', quizListener);
+    twitchQuizActif = false;
   };
 
   twitchClient.on('message', quizListener);
 
-  setTimeout(() => {
+  const timer = setTimeout(() => {
     if (twitchQuizActif) {
       twitchClient.say(
         channel,
@@ -592,6 +589,72 @@ if (twitchMessageCount >= 5 && !twitchQuizActif) {
       twitchClient.removeListener('message', quizListener);
       twitchQuizActif = false;
     }
-    }, 30000);
+  }, 30000);
+}
+
+twitchClient.on('message', async (channel, tags, message, self) => {
+  if (self) return;
+
+  const msg = message.toLowerCase();
+
+  if (msg === '!bonjour') {
+    return twitchClient.say(channel, 'Bonjour 👋 Que Dieu vous bénisse.');
+  }
+
+  if (msg === '!guide') {
+    return twitchClient.say(channel, '📌 Commandes Bible.v7 : !bonjour, !guide, !psaume, !priere, !jesus, !aide, !suivi, !temoignage, !devotion, !verset Jean 3:16, !quiz');
+  }
+
+  if (msg === '!psaume') {
+    return twitchClient.say(channel, cleanTwitch(getRandomPsalm()));
+  }
+
+  if (msg === '!priere') {
+    return twitchClient.say(channel, cleanTwitch(priereMessage()));
+  }
+
+  if (msg === '!jesus') {
+    return twitchClient.say(
+      channel,
+      "✝️ L'ABC du SALUT — A: Admets que tu es pécheur (Romains 3:23) | B: Crois en Jésus-Christ (Jean 3:16) | C: Confesse Jésus comme Seigneur (Romains 10:9) ❤️"
+    );
+  }
+
+  if (msg === '!aide') {
+    return twitchClient.say(channel, cleanTwitch(aideMessage()));
+  }
+
+  if (msg === '!suivi') {
+    return twitchClient.say(channel, cleanTwitch(suiviMessage()));
+  }
+
+  if (msg === '!temoignage') {
+    return twitchClient.say(channel, cleanTwitch(temoignageMessage()));
+  }
+
+  if (msg === '!devotion') {
+    return twitchClient.say(channel, cleanTwitch(devotionMessage()));
+  }
+
+  if (msg.startsWith('!verset ')) {
+    const reference = message.slice(8).trim();
+
+    try {
+      const verse = await getVerse(reference);
+      return twitchClient.say(channel, cleanTwitch(verse));
+    } catch (error) {
+      return twitchClient.say(channel, '🙏 Verset introuvable. Exemple : !verset Jean 14:6');
+    }
+  }
+
+  if (msg === '!quiz') {
+    return lancerQuizTwitch(channel);
+  }
+
+  twitchMessageCount++;
+
+  if (twitchMessageCount >= 5 && !twitchQuizActif) {
+    twitchMessageCount = 0;
+    lancerQuizTwitch(channel);
   }
 });
