@@ -33,16 +33,99 @@ const psaumes = [
   }
 ];
 
+const devotions = [
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Proverbes 3:5-6**\n« Confie-toi en l’Éternel de tout ton cœur, et ne t’appuie pas sur ta sagesse ; reconnais-le dans toutes tes voies, et il aplanira tes sentiers. »\n\n🙏 Aujourd’hui, faites confiance à Dieu même quand vous ne comprenez pas encore le chemin."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Ésaïe 41:10**\n« Ne crains rien, car je suis avec toi ; ne promène pas des regards inquiets, car je suis ton Dieu. »\n\n🙏 Dieu est avec vous. Ne laissez pas la peur diriger votre journée."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Psaume 27:1**\n« L’Éternel est ma lumière et mon salut : de qui aurais-je crainte ? »\n\n🙏 Quand Dieu est votre lumière, les ténèbres ne peuvent pas vous dominer."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Philippiens 4:6**\n« Ne vous inquiétez de rien ; mais en toute chose faites connaître vos besoins à Dieu par des prières et des supplications. »\n\n🙏 Remettez vos inquiétudes entre les mains de Dieu dans la prière."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Jérémie 29:11**\n« Car je connais les projets que j’ai formés sur vous, dit l’Éternel. »\n\n🙏 Dieu connaît votre avenir. Continuez à marcher avec foi."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Psaume 46:2**\n« Dieu est pour nous un refuge et un appui, un secours qui ne manque jamais dans la détresse. »\n\n🙏 Dans les moments difficiles, Dieu reste votre refuge."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Jean 14:27**\n« Je vous laisse la paix, je vous donne ma paix. »\n\n🙏 Recevez la paix de Jésus, une paix que le monde ne peut pas donner."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Romains 8:28**\n« Toutes choses concourent au bien de ceux qui aiment Dieu. »\n\n🙏 Dieu peut transformer même les épreuves en bénédiction."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Psaume 121:1-2**\n« Le secours me vient de l’Éternel, qui a fait les cieux et la terre. »\n\n🙏 Votre secours vient de Dieu. Levez les yeux vers lui."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Matthieu 11:28**\n« Venez à moi, vous tous qui êtes fatigués et chargés, et je vous donnerai du repos. »\n\n🙏 Jésus invite les cœurs fatigués à trouver le repos en lui."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Josué 1:9**\n« Fortifie-toi et prends courage. »\n\n🙏 Avancez avec courage, car Dieu marche avec vous."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Psaume 23:1**\n« L’Éternel est mon berger : je ne manquerai de rien. »\n\n🙏 Quand Dieu vous conduit, il sait comment prendre soin de vous."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Galates 6:9**\n« Ne nous lassons pas de faire le bien. »\n\n🙏 Continuez à faire le bien, même quand personne ne semble le voir."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **1 Pierre 5:7**\n« Déchargez-vous sur lui de tous vos soucis, car lui-même prend soin de vous. »\n\n🙏 Dieu prend soin de vous. Déposez vos fardeaux devant lui."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Psaume 91:11**\n« Car il ordonnera à ses anges de te garder dans toutes tes voies. »\n\n🙏 Dieu veille sur vous, même quand vous ne voyez pas son action."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Hébreux 11:1**\n« Or la foi est une ferme assurance des choses qu’on espère. »\n\n🙏 La foi vous aide à tenir ferme avant même de voir la réponse."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Jean 16:33**\n« Prenez courage, j’ai vaincu le monde. »\n\n🙏 Votre courage vient de Jésus, celui qui a déjà vaincu."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Psaume 34:9**\n« Sentez et voyez combien l’Éternel est bon ! »\n\n🙏 Prenez le temps de reconnaître la bonté de Dieu aujourd’hui."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Luc 1:37**\n« Car rien n’est impossible à Dieu. »\n\n🙏 Ne limitez pas Dieu. Ce qui semble impossible pour vous ne l’est pas pour lui."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Romains 12:12**\n« Réjouissez-vous en espérance. Soyez patients dans l’affliction. Persévérez dans la prière. »\n\n🙏 Continuez à prier. Dieu agit même quand la réponse tarde."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Psaume 37:5**\n« Recommande ton sort à l’Éternel, mets en lui ta confiance, et il agira. »\n\n🙏 Remettez votre chemin à Dieu et laissez-le agir."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **2 Corinthiens 5:7**\n« Car nous marchons par la foi et non par la vue. »\n\n🙏 Ne vous fiez pas seulement à ce que vous voyez. Marchez par la foi."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Jean 8:12**\n« Je suis la lumière du monde. »\n\n🙏 Jésus peut éclairer les endroits sombres de votre vie."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Psaume 55:23**\n« Remets ton sort à l’Éternel, et il te soutiendra. »\n\n🙏 Dieu peut vous soutenir là où vos forces sont limitées."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Éphésiens 6:10**\n« Fortifiez-vous dans le Seigneur, et par sa force toute-puissante. »\n\n🙏 Votre force spirituelle vient du Seigneur."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Matthieu 6:33**\n« Cherchez premièrement le royaume et la justice de Dieu. »\n\n🙏 Mettez Dieu en premier, et laissez-le guider le reste."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Psaume 119:105**\n« Ta parole est une lampe à mes pieds, et une lumière sur mon sentier. »\n\n🙏 La Parole de Dieu éclaire vos décisions."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Apocalypse 3:20**\n« Voici, je me tiens à la porte, et je frappe. »\n\n🙏 Jésus désire entrer plus profondément dans votre vie."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Nahum 1:7**\n« L’Éternel est bon, il est un refuge au jour de la détresse. »\n\n🙏 Dieu reste bon et fidèle dans les jours difficiles."
+  },
+  {
+    text: "✨ **Dévotion du jour**\n\n📖 **Psaume 150:6**\n« Que tout ce qui respire loue l’Éternel ! »\n\n🙏 Aujourd’hui, prenez un moment pour louer Dieu avec gratitude."
+  }
+];
 
-
-if (commandName === 'devotion') {
-
-const randomDevotion =
-devotions[Math.floor(Math.random() * devotions.length)];
-
-await interaction.reply(randomDevotion.text);
-
-}
 let lastPsalmIndex = -1;
 
 function getRandomPsalm() {
@@ -68,7 +151,7 @@ function guideMessage() {
     "`!aide` ou `/aide` — Recevoir de l’aide et du soutien spirituel\n" +
     "`!suivi` — Demander un accompagnement spirituel\n" +
     "`!temoignage` — Partager un témoignage\n" +
-    "`!devotion` ou `/devotion` — Recevoir une courte dévotion"
+    "`!devotion` ou `/devotion` — Recevoir une dévotion avec un verset"
   );
 }
 
@@ -136,10 +219,10 @@ function temoignageMessage() {
 }
 
 function devotionMessage() {
-  return (
-    "✨ **Dévotion du jour**\n\n" +
-    "Aujourd’hui, avançons avec foi. Même si nous ne voyons pas encore le chemin, Dieu marche devant nous. Faisons-lui confiance."
-  );
+  const randomDevotion =
+    devotions[Math.floor(Math.random() * devotions.length)];
+
+  return randomDevotion.text;
 }
 
 async function getVerse(reference) {
