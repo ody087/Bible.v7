@@ -599,8 +599,9 @@ clearTimeout(timer);
 twitchClient.removeListener('message', quizListener);
 
 twitchQuizActif = false;
-    
-  twitchClient.on('message', quizListener);
+};
+
+twitchClient.on('message', quizListener);
 
   const timer = setTimeout(() => {
     if (twitchQuizActif) {
