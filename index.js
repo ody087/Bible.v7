@@ -33,6 +33,118 @@ const psaumes = [
   }
 ];
 
+const devotions = [
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Proverbes 3:5-6**\n« Confie-toi en l’Éternel de tout ton cœur. »\n\n🙏 Bondye konnen chemen an menm lè ou pa wè l."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Ésaïe 41:10**\n« Ne crains rien, car je suis avec toi. »\n\n🙏 Bondye avèk ou menm nan moman difisil yo."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Psaume 27:1**\n« L’Éternel est ma lumière et mon salut. »\n\n🙏 Pa kite laperèz domine w. Bondye se limyè w."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Philippiens 4:6**\n« Ne vous inquiétez de rien. »\n\n🙏 Lage tout sousi ou yo nan men Bondye."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Jérémie 29:11**\n« Car je connais les projets que j’ai formés sur vous. »\n\n🙏 Bondye gen yon plan beni pou lavi ou."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Psaume 46:2**\n« Dieu est pour nous un refuge et un appui. »\n\n🙏 Lè lavi difisil, Bondye rete refij ou."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Jean 14:27**\n« Je vous laisse la paix. »\n\n🙏 Lapè Bondye pi fò pase tout konfizyon."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Romains 8:28**\n« Toutes choses concourent au bien de ceux qui aiment Dieu. »\n\n🙏 Bondye ka sèvi menm doulè w pou fè byen."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Psaume 121:1-2**\n« Mon secours vient de l’Éternel. »\n\n🙏 Èd ou pap soti nan moun sèlman, men nan Bondye."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Matthieu 11:28**\n« Venez à moi, vous tous qui êtes fatigués. »\n\n🙏 Jezi vle ba ou repo pou nanm ou."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Josué 1:9**\n« Fortifie-toi et prends courage. »\n\n🙏 Bondye mande w mache avèk fòs ak lafwa."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Psaume 23:1**\n« L’Éternel est mon berger. »\n\n🙏 Lè Bondye ap gide w, ou pap manke anyen."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Galates 6:9**\n« Ne nous lassons pas de faire le bien. »\n\n🙏 Kontinye fè byen menm lè moun pa wè efò ou."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **1 Pierre 5:7**\n« Déchargez-vous sur lui de tous vos soucis. »\n\n🙏 Bondye sousye de sa k ap fè w mal la."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Psaume 91:11**\n« Il ordonnera à ses anges de te garder. »\n\n🙏 Bondye ap pwoteje w menm lè ou pa wè li."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Hébreux 11:1**\n« La foi est une ferme assurance. »\n\n🙏 Lafwa se kwè menm avan ou wè."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Jean 16:33**\n« Prenez courage, j’ai vaincu le monde. »\n\n🙏 Viktwa ou deja nan Jezi-Christ."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Psaume 34:9**\n« Goûtez et voyez combien l’Éternel est bon. »\n\n🙏 Bondye toujou bon menm nan eprèv yo."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Luc 1:37**\n« Rien n’est impossible à Dieu. »\n\n🙏 Pa limite sa Bondye kapab fè."
+},
+
+{
+text:
+"✨ **Dévotion du jour**\n\n📖 **Romains 12:12**\n« Persévérez dans la prière. »\n\n🙏 Pa sispann priye menm lè repons lan pran tan."
+}
+
+];
+
+if (commandName === 'devotion') {
+
+const randomDevotion =
+devotions[Math.floor(Math.random() * devotions.length)];
+
+await interaction.reply(randomDevotion.text);
+
+}
 let lastPsalmIndex = -1;
 
 function getRandomPsalm() {
