@@ -137,7 +137,6 @@ const quizzes = [
   { question: "Quel est le premier livre de la Bible ?", options: ["Exode", "Genèse", "Psaumes", "Matthieu"], answer: "Genèse", reference: "Genèse 1:1" },
   { question: "Quel est le dernier livre de la Bible ?", options: ["Jude", "Apocalypse", "Actes", "Romains"], answer: "Apocalypse", reference: "Apocalypse 1:1" },
   { question: "Qui était dans la fosse aux lions ?", options: ["Joseph", "Daniel", "Moïse", "Paul"], answer: "Daniel", reference: "Daniel 6:16-22" },
-
   { question: "Qui a reçu les dix commandements ?", options: ["Abraham", "Moïse", "David", "Élie"], answer: "Moïse", reference: "Exode 20:1-17" },
   { question: "Qui était la mère de Jésus ?", options: ["Marie", "Marthe", "Élisabeth", "Anne"], answer: "Marie", reference: "Luc 1:30-31" },
   { question: "Dans quelle ville Jésus est-il né ?", options: ["Nazareth", "Jérusalem", "Bethléem", "Capernaüm"], answer: "Bethléem", reference: "Matthieu 2:1" },
@@ -148,7 +147,6 @@ const quizzes = [
   { question: "Quel homme était fort et lié à ses cheveux ?", options: ["Samson", "David", "Gédéon", "Ésaü"], answer: "Samson", reference: "Juges 16:17" },
   { question: "Qui a interprété les rêves en Égypte ?", options: ["Joseph", "Moïse", "Aaron", "Josué"], answer: "Joseph", reference: "Genèse 41:15-16" },
   { question: "Quel prophète a fait descendre le feu du ciel ?", options: ["Élie", "Élisée", "Samuel", "Nathan"], answer: "Élie", reference: "1 Rois 18:36-39" },
-
   { question: "Qui a écrit beaucoup de psaumes ?", options: ["David", "Paul", "Moïse", "Luc"], answer: "David", reference: "Psaume 3:1" },
   { question: "Quel apôtre était collecteur d’impôts ?", options: ["Pierre", "Matthieu", "Jean", "Thomas"], answer: "Matthieu", reference: "Matthieu 9:9" },
   { question: "Qui a renié Jésus trois fois ?", options: ["Pierre", "Judas", "Jean", "Jacques"], answer: "Pierre", reference: "Luc 22:61" },
@@ -159,7 +157,6 @@ const quizzes = [
   { question: "Qui était la première femme ?", options: ["Sarah", "Ève", "Rébecca", "Rachel"], answer: "Ève", reference: "Genèse 3:20" },
   { question: "Qui a tué Abel ?", options: ["Caïn", "Ésaü", "Lémec", "Nimrod"], answer: "Caïn", reference: "Genèse 4:8" },
   { question: "Qui a vendu son droit d’aînesse pour un plat ?", options: ["Jacob", "Ésaü", "Joseph", "Ruben"], answer: "Ésaü", reference: "Genèse 25:29-34" },
-
   { question: "Qui a lutté avec Dieu ?", options: ["Jacob", "Joseph", "Moïse", "Aaron"], answer: "Jacob", reference: "Genèse 32:24-30" },
   { question: "Quelle reine a aidé à sauver son peuple ?", options: ["Jézabel", "Esther", "Vasthi", "Marie"], answer: "Esther", reference: "Esther 4:14" },
   { question: "Qui a écrit l’Apocalypse ?", options: ["Paul", "Pierre", "Jean", "Luc"], answer: "Jean", reference: "Apocalypse 1:1-2" },
@@ -170,7 +167,6 @@ const quizzes = [
   { question: "Qui était le père de Jean-Baptiste ?", options: ["Joseph", "Zacharie", "Siméon", "Éli"], answer: "Zacharie", reference: "Luc 1:13" },
   { question: "Qui a reçu la sagesse de Dieu dans un rêve ?", options: ["David", "Salomon", "Samuel", "Saül"], answer: "Salomon", reference: "1 Rois 3:5-12" },
   { question: "Quel livre est connu pour les proverbes de sagesse ?", options: ["Proverbes", "Job", "Ruth", "Actes"], answer: "Proverbes", reference: "Proverbes 1:1-7" },
-
   { question: "Quel prophète est monté au ciel dans un tourbillon ?", options: ["Élie", "Élisée", "Ésaïe", "Jérémie"], answer: "Élie", reference: "2 Rois 2:11" },
   { question: "Qui a interprété l’écriture sur le mur ?", options: ["Daniel", "Joseph", "Moïse", "Esdras"], answer: "Daniel", reference: "Daniel 5:25-28" },
   { question: "Qui était appelé le disciple que Jésus aimait ?", options: ["Jean", "Pierre", "Thomas", "Jacques"], answer: "Jean", reference: "Jean 21:20" },
@@ -181,7 +177,6 @@ const quizzes = [
   { question: "Quel livre raconte la création du monde ?", options: ["Genèse", "Exode", "Jean", "Apocalypse"], answer: "Genèse", reference: "Genèse 1:1" },
   { question: "Sur quelle montagne Moïse a-t-il reçu la loi ?", options: ["Sinaï", "Carmel", "Sion", "Morija"], answer: "Sinaï", reference: "Exode 19:20" },
   { question: "Quel commandement parle d’honorer ses parents ?", options: ["Le premier", "Le troisième", "Le cinquième", "Le dixième"], answer: "Le cinquième", reference: "Exode 20:12" },
-
   { question: "Qui a dit : Me voici, envoie-moi ?", options: ["Ésaïe", "Jonas", "Moïse", "Jérémie"], answer: "Ésaïe", reference: "Ésaïe 6:8" },
   { question: "Quel prophète a fui à Tarsis ?", options: ["Jonas", "Amos", "Osée", "Nahum"], answer: "Jonas", reference: "Jonas 1:3" },
   { question: "Qui a conduit Israël après Moïse ?", options: ["Aaron", "Josué", "Caleb", "Samuel"], answer: "Josué", reference: "Josué 1:1-2" },
@@ -195,6 +190,8 @@ const quizzes = [
 ];
 
 let lastPsalmIndex = -1;
+let messageCount = 0;
+let quizAutomatiqueActif = false;
 
 function getRandomPsalm() {
   let randomIndex;
@@ -302,6 +299,16 @@ async function getVerse(reference) {
   return `📖 **${reference}**\n\n${response.data.text.trim()}`;
 }
 
+function getBonnesReponses(random) {
+  return [
+    random.answer.toLowerCase(),
+    random.options.indexOf(random.answer) === 0 ? "a" : "",
+    random.options.indexOf(random.answer) === 1 ? "b" : "",
+    random.options.indexOf(random.answer) === 2 ? "c" : "",
+    random.options.indexOf(random.answer) === 3 ? "d" : ""
+  ].filter(Boolean);
+}
+
 async function quizMessage(interaction) {
   const random = quizzes[Math.floor(Math.random() * quizzes.length)];
 
@@ -316,18 +323,10 @@ async function quizMessage(interaction) {
     `Répondez avec **A, B, C, D** ou avec la réponse.`
   );
 
-  const bonnesReponses = [
-    random.answer.toLowerCase(),
-    random.options.indexOf(random.answer) === 0 ? "a" : "",
-    random.options.indexOf(random.answer) === 1 ? "b" : "",
-    random.options.indexOf(random.answer) === 2 ? "c" : "",
-    random.options.indexOf(random.answer) === 3 ? "d" : ""
-  ].filter(Boolean);
-
-  const filter = m => !m.author.bot;
+  const bonnesReponses = getBonnesReponses(random);
 
   const collected = await interaction.channel.awaitMessages({
-    filter,
+    filter: m => !m.author.bot,
     max: 1,
     time: 30000
   });
@@ -351,6 +350,54 @@ async function quizMessage(interaction) {
   );
 }
 
+async function lancerQuizAutomatique(channel) {
+  quizAutomatiqueActif = true;
+
+  const random = quizzes[Math.floor(Math.random() * quizzes.length)];
+
+  await channel.send(
+    `📖 **Quiz Biblique Automatique**\n\n` +
+    `❓ ${random.question}\n\n` +
+    `🇦 ${random.options[0]}\n` +
+    `🇧 ${random.options[1]}\n` +
+    `🇨 ${random.options[2]}\n` +
+    `🇩 ${random.options[3]}\n\n` +
+    `⏳ Vous avez 30 secondes pour répondre.\n` +
+    `Répondez avec **A, B, C, D** ou avec la réponse.`
+  );
+
+  const bonnesReponses = getBonnesReponses(random);
+
+  const collected = await channel.awaitMessages({
+    filter: m => !m.author.bot,
+    max: 1,
+    time: 30000
+  });
+
+  if (!collected.size) {
+    await channel.send(
+      `⏰ Temps écoulé.\n\n✅ **Réponse :** ${random.answer}\n📖 **Référence :** ${random.reference}`
+    );
+
+    quizAutomatiqueActif = false;
+    return;
+  }
+
+  const response = collected.first().content.trim().toLowerCase();
+
+  if (bonnesReponses.some(rep => response.includes(rep))) {
+    await channel.send(
+      `✅ Bonne réponse !\n\n📖 **Référence :** ${random.reference}`
+    );
+  } else {
+    await channel.send(
+      `❌ Mauvaise réponse.\n\n✅ **Réponse :** ${random.answer}\n📖 **Référence :** ${random.reference}`
+    );
+  }
+
+  quizAutomatiqueActif = false;
+}
+
 client.once(Events.ClientReady, () => {
   console.log(`Bible.v7 est connecté en tant que ${client.user.tag}`);
 });
@@ -360,6 +407,15 @@ client.on(Events.MessageCreate, async message => {
   if (message.author.bot) return;
 
   const msg = message.content.toLowerCase();
+
+  if (!quizAutomatiqueActif) {
+    messageCount++;
+
+    if (messageCount >= 5) {
+      messageCount = 0;
+      lancerQuizAutomatique(message.channel);
+    }
+  }
 
   if (msg === '!bonjour') {
     message.reply('Bonjour 👋 Que Dieu vous bénisse.');
