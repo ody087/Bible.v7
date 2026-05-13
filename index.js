@@ -592,5 +592,6 @@ if (twitchMessageCount >= 5 && !twitchQuizActif) {
       twitchClient.removeListener('message', quizListener);
       twitchQuizActif = false;
     }
-  }, 30000);
-}
+    }, 30000);
+  }
+});
