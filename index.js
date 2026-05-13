@@ -514,69 +514,82 @@ client.on(Events.InteractionCreate, async interaction => {
   }
 });
 
-client.login(process.env.DISCORD_TOKEN);
-const twitchClient = new tmi.Client({
+client.login(process.env.DISCORD_TOKEN);const twitchClient = new tmi.Client({
   options: { debug: true },
-
   identity: {
     username: process.env.TWITCH_BOT_USERNAME,
     password: process.env.TWITCH_OAUTH_TOKEN
   },
-
   channels: [process.env.TWITCH_CHANNEL]
 });
 
 twitchClient.connect();
 
 twitchClient.on('message', async (channel, tags, message, self) => {
-
   if (self) return;
 
   const msg = message.toLowerCase();
 
+  if (msg === '!bonjour') {
+    twitchClient.say(channel, 'Bonjour 👋 Que Dieu vous bénisse.');
+  }
+
+  if (msg === '!guide') {
+    twitchClient.say(channel, '📌 Commandes Bible.v7 : !bonjour, !guide, !psaume, !priere, !jesus, !aide, !suivi, !temoignage, !devotion, !verset Jean 3:16, !quiz');
+  }
+
   if (msg === '!psaume') {
-    twitchClient.say(channel, getRandomPsalm());
+    twitchClient.say(channel, getRandomPsalm().replace(/\n/g, ' '));
   }
 
   if (msg === '!priere') {
-    twitchClient.say(channel, priereMessage());
-  }
-
-  if (msg === '!devotion') {
-    twitchClient.say(channel, devotionMessage());
+    twitchClient.say(channel, priereMessage().replace(/\n/g, ' '));
   }
 
   if (msg === '!jesus') {
-    twitchClient.say(
-      channel,
-      "✝️ Jésus-Christ vous aime ❤️"
-    );
+    twitchClient.say(channel, jesusMessage().replace(/\n/g, ' '));
+  }
+
+  if (msg === '!aide') {
+    twitchClient.say(channel, aideMessage().replace(/\n/g, ' '));
+  }
+
+  if (msg === '!suivi') {
+    twitchClient.say(channel, suiviMessage().replace(/\n/g, ' '));
+  }
+
+  if (msg === '!temoignage') {
+    twitchClient.say(channel, temoignageMessage().replace(/\n/g, ' '));
+  }
+
+  if (msg === '!devotion') {
+    twitchClient.say(channel, devotionMessage().replace(/\n/g, ' '));
   }
 
   if (msg.startsWith('!verset ')) {
-
-    const reference =
-    message.slice(8).trim();
+    const reference = message.slice(8).trim();
 
     try {
-
-      const verse =
-      await getVerse(reference);
-
-      twitchClient.say(
-        channel,
-        verse.replace(/\n/g, " ")
-      );
-
+      const verse = await getVerse(reference);
+      twitchClient.say(channel, verse.replace(/\n/g, ' '));
     } catch (error) {
-
-      twitchClient.say(
-        channel,
-        "🙏 Verset introuvable. Exemple : !verset Jean 14:6"
-      );
-
+      twitchClient.say(channel, '🙏 Verset introuvable. Exemple : !verset Jean 14:6');
     }
-
   }
 
+  if (msg === '!quiz') {
+    const random = quizzes[Math.floor(Math.random() * quizzes.length)];
+
+    twitchClient.say(
+      channel,
+      `📖 Quiz Biblique : ${random.question} | A: ${random.options[0]} | B: ${random.options[1]} | C: ${random.options[2]} | D: ${random.options[3]} | Répondez avec A, B, C ou D.`
+    );
+
+    setTimeout(() => {
+      twitchClient.say(
+        channel,
+        `✅ Réponse : ${random.answer} | 📖 Référence : ${random.reference}`
+      );
+    }, 30000);
+  }
 });
