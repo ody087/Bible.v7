@@ -26,6 +26,10 @@ const commands = [
     .setDescription('Recevoir une dévotion'),
 
   new SlashCommandBuilder()
+    .setName('quiz')
+    .setDescription('Recevoir une question de quiz biblique'),
+
+  new SlashCommandBuilder()
     .setName('verset')
     .setDescription('Rechercher un verset biblique')
     .addStringOption(option =>
