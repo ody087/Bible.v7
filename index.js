@@ -126,6 +126,74 @@ const devotions = [
   }
 ];
 
+const quizzes = [
+  { question: "Que doit faire une personne pour être sauvée ?", options: ["Respecter les 10 commandements", "Ne jamais pécher", "Être né dans une famille chrétienne", "Recevoir la grâce de Dieu par la foi en Jésus-Christ"], answer: "Recevoir la grâce de Dieu par la foi en Jésus-Christ", reference: "Éphésiens 2:8-9" },
+  { question: "Qui a construit l’arche ?", options: ["Moïse", "Noé", "David", "Paul"], answer: "Noé", reference: "Genèse 6:13-22" },
+  { question: "Qui a ouvert la mer Rouge ?", options: ["Élie", "Moïse", "Josué", "Aaron"], answer: "Moïse", reference: "Exode 14:21" },
+  { question: "Qui a trahi Jésus ?", options: ["Pierre", "Jean", "Judas", "Thomas"], answer: "Judas", reference: "Matthieu 26:14-16" },
+  { question: "Qui a vaincu Goliath ?", options: ["Saül", "David", "Samuel", "Salomon"], answer: "David", reference: "1 Samuel 17:49-50" },
+  { question: "Combien de disciples Jésus avait-il ?", options: ["7", "10", "12", "40"], answer: "12", reference: "Matthieu 10:1-4" },
+  { question: "Qui a été avalé par un grand poisson ?", options: ["Jonas", "Élie", "Daniel", "Noé"], answer: "Jonas", reference: "Jonas 1:17" },
+  { question: "Quel est le premier livre de la Bible ?", options: ["Exode", "Genèse", "Psaumes", "Matthieu"], answer: "Genèse", reference: "Genèse 1:1" },
+  { question: "Quel est le dernier livre de la Bible ?", options: ["Jude", "Apocalypse", "Actes", "Romains"], answer: "Apocalypse", reference: "Apocalypse 1:1" },
+  { question: "Qui était dans la fosse aux lions ?", options: ["Joseph", "Daniel", "Moïse", "Paul"], answer: "Daniel", reference: "Daniel 6:16-22" },
+
+  { question: "Qui a reçu les dix commandements ?", options: ["Abraham", "Moïse", "David", "Élie"], answer: "Moïse", reference: "Exode 20:1-17" },
+  { question: "Qui était la mère de Jésus ?", options: ["Marie", "Marthe", "Élisabeth", "Anne"], answer: "Marie", reference: "Luc 1:30-31" },
+  { question: "Dans quelle ville Jésus est-il né ?", options: ["Nazareth", "Jérusalem", "Bethléem", "Capernaüm"], answer: "Bethléem", reference: "Matthieu 2:1" },
+  { question: "Qui a baptisé Jésus ?", options: ["Pierre", "Jean-Baptiste", "Paul", "Jacques"], answer: "Jean-Baptiste", reference: "Matthieu 3:13-17" },
+  { question: "Quel disciple a marché sur l’eau avec Jésus ?", options: ["Jean", "Pierre", "Thomas", "André"], answer: "Pierre", reference: "Matthieu 14:28-29" },
+  { question: "Qui était connu pour sa grande sagesse ?", options: ["Saül", "Salomon", "Samson", "Absalom"], answer: "Salomon", reference: "1 Rois 3:12" },
+  { question: "Combien de jours Jésus a-t-il jeûné dans le désert ?", options: ["7", "21", "40", "50"], answer: "40", reference: "Matthieu 4:1-2" },
+  { question: "Quel homme était fort et lié à ses cheveux ?", options: ["Samson", "David", "Gédéon", "Ésaü"], answer: "Samson", reference: "Juges 16:17" },
+  { question: "Qui a interprété les rêves en Égypte ?", options: ["Joseph", "Moïse", "Aaron", "Josué"], answer: "Joseph", reference: "Genèse 41:15-16" },
+  { question: "Quel prophète a fait descendre le feu du ciel ?", options: ["Élie", "Élisée", "Samuel", "Nathan"], answer: "Élie", reference: "1 Rois 18:36-39" },
+
+  { question: "Qui a écrit beaucoup de psaumes ?", options: ["David", "Paul", "Moïse", "Luc"], answer: "David", reference: "Psaume 3:1" },
+  { question: "Quel apôtre était collecteur d’impôts ?", options: ["Pierre", "Matthieu", "Jean", "Thomas"], answer: "Matthieu", reference: "Matthieu 9:9" },
+  { question: "Qui a renié Jésus trois fois ?", options: ["Pierre", "Judas", "Jean", "Jacques"], answer: "Pierre", reference: "Luc 22:61" },
+  { question: "Qui a vu Jésus ressuscité près du tombeau ?", options: ["Marie-Madeleine", "Marthe", "Élisabeth", "Marie mère de Jésus"], answer: "Marie-Madeleine", reference: "Jean 20:14-18" },
+  { question: "Combien de jours Dieu a-t-il pris pour créer le monde ?", options: ["3", "6", "7", "10"], answer: "6", reference: "Genèse 1:31" },
+  { question: "Quel jour Dieu s’est-il reposé ?", options: ["Le troisième jour", "Le sixième jour", "Le septième jour", "Le premier jour"], answer: "Le septième jour", reference: "Genèse 2:2" },
+  { question: "Qui était le premier homme ?", options: ["Abel", "Adam", "Noé", "Seth"], answer: "Adam", reference: "Genèse 2:7" },
+  { question: "Qui était la première femme ?", options: ["Sarah", "Ève", "Rébecca", "Rachel"], answer: "Ève", reference: "Genèse 3:20" },
+  { question: "Qui a tué Abel ?", options: ["Caïn", "Ésaü", "Lémec", "Nimrod"], answer: "Caïn", reference: "Genèse 4:8" },
+  { question: "Qui a vendu son droit d’aînesse pour un plat ?", options: ["Jacob", "Ésaü", "Joseph", "Ruben"], answer: "Ésaü", reference: "Genèse 25:29-34" },
+
+  { question: "Qui a lutté avec Dieu ?", options: ["Jacob", "Joseph", "Moïse", "Aaron"], answer: "Jacob", reference: "Genèse 32:24-30" },
+  { question: "Quelle reine a aidé à sauver son peuple ?", options: ["Jézabel", "Esther", "Vasthi", "Marie"], answer: "Esther", reference: "Esther 4:14" },
+  { question: "Qui a écrit l’Apocalypse ?", options: ["Paul", "Pierre", "Jean", "Luc"], answer: "Jean", reference: "Apocalypse 1:1-2" },
+  { question: "Quel disciple a douté de la résurrection ?", options: ["Thomas", "Pierre", "André", "Philippe"], answer: "Thomas", reference: "Jean 20:24-29" },
+  { question: "Qui a remplacé Judas parmi les apôtres ?", options: ["Barnabas", "Matthias", "Silas", "Marc"], answer: "Matthias", reference: "Actes 1:26" },
+  { question: "Quel apôtre a été aveuglé sur le chemin de Damas ?", options: ["Paul", "Pierre", "Jean", "Jacques"], answer: "Paul", reference: "Actes 9:3-9" },
+  { question: "Quel est le plus court verset connu de la Bible ?", options: ["Jésus pleura", "Dieu est amour", "Priez sans cesse", "Soyez saints"], answer: "Jésus pleura", reference: "Jean 11:35" },
+  { question: "Qui était le père de Jean-Baptiste ?", options: ["Joseph", "Zacharie", "Siméon", "Éli"], answer: "Zacharie", reference: "Luc 1:13" },
+  { question: "Qui a reçu la sagesse de Dieu dans un rêve ?", options: ["David", "Salomon", "Samuel", "Saül"], answer: "Salomon", reference: "1 Rois 3:5-12" },
+  { question: "Quel livre est connu pour les proverbes de sagesse ?", options: ["Proverbes", "Job", "Ruth", "Actes"], answer: "Proverbes", reference: "Proverbes 1:1-7" },
+
+  { question: "Quel prophète est monté au ciel dans un tourbillon ?", options: ["Élie", "Élisée", "Ésaïe", "Jérémie"], answer: "Élie", reference: "2 Rois 2:11" },
+  { question: "Qui a interprété l’écriture sur le mur ?", options: ["Daniel", "Joseph", "Moïse", "Esdras"], answer: "Daniel", reference: "Daniel 5:25-28" },
+  { question: "Qui était appelé le disciple que Jésus aimait ?", options: ["Jean", "Pierre", "Thomas", "Jacques"], answer: "Jean", reference: "Jean 21:20" },
+  { question: "Qui a porté la croix de Jésus ?", options: ["Simon de Cyrène", "Pierre", "Jean", "Joseph"], answer: "Simon de Cyrène", reference: "Luc 23:26" },
+  { question: "Qui a demandé le corps de Jésus après sa mort ?", options: ["Nicodème", "Joseph d’Arimathée", "Pierre", "Pilate"], answer: "Joseph d’Arimathée", reference: "Marc 15:43-46" },
+  { question: "Quel fruit de l’Esprit est cité en premier ?", options: ["La paix", "La joie", "L’amour", "La patience"], answer: "L’amour", reference: "Galates 5:22" },
+  { question: "Quel auteur biblique était médecin ?", options: ["Luc", "Paul", "Marc", "Matthieu"], answer: "Luc", reference: "Colossiens 4:14" },
+  { question: "Quel livre raconte la création du monde ?", options: ["Genèse", "Exode", "Jean", "Apocalypse"], answer: "Genèse", reference: "Genèse 1:1" },
+  { question: "Sur quelle montagne Moïse a-t-il reçu la loi ?", options: ["Sinaï", "Carmel", "Sion", "Morija"], answer: "Sinaï", reference: "Exode 19:20" },
+  { question: "Quel commandement parle d’honorer ses parents ?", options: ["Le premier", "Le troisième", "Le cinquième", "Le dixième"], answer: "Le cinquième", reference: "Exode 20:12" },
+
+  { question: "Qui a dit : Me voici, envoie-moi ?", options: ["Ésaïe", "Jonas", "Moïse", "Jérémie"], answer: "Ésaïe", reference: "Ésaïe 6:8" },
+  { question: "Quel prophète a fui à Tarsis ?", options: ["Jonas", "Amos", "Osée", "Nahum"], answer: "Jonas", reference: "Jonas 1:3" },
+  { question: "Qui a conduit Israël après Moïse ?", options: ["Aaron", "Josué", "Caleb", "Samuel"], answer: "Josué", reference: "Josué 1:1-2" },
+  { question: "Quelle femme a caché les espions à Jéricho ?", options: ["Rahab", "Déborah", "Ruth", "Anne"], answer: "Rahab", reference: "Josué 2:1-6" },
+  { question: "Qui était la belle-mère de Ruth ?", options: ["Naomi", "Marie", "Anne", "Léa"], answer: "Naomi", reference: "Ruth 1:16" },
+  { question: "Qui a oint David comme roi ?", options: ["Samuel", "Nathan", "Élie", "Moïse"], answer: "Samuel", reference: "1 Samuel 16:13" },
+  { question: "Qui a prié et Dieu lui a donné Samuel ?", options: ["Anne", "Sarah", "Rachel", "Rébecca"], answer: "Anne", reference: "1 Samuel 1:10-20" },
+  { question: "Qui a demandé à Jésus : Que dois-je faire pour hériter la vie éternelle ?", options: ["Un jeune homme riche", "Pilate", "Zachée", "Nicodème"], answer: "Un jeune homme riche", reference: "Matthieu 19:16" },
+  { question: "Qui est monté sur un sycomore pour voir Jésus ?", options: ["Zachée", "Bartimée", "Nicodème", "Lazare"], answer: "Zachée", reference: "Luc 19:1-6" },
+  { question: "Qui Jésus a-t-il ressuscité après quatre jours dans le tombeau ?", options: ["Lazare", "Étienne", "Jean-Baptiste", "Jairus"], answer: "Lazare", reference: "Jean 11:38-44" }
+];
+
 let lastPsalmIndex = -1;
 
 function getRandomPsalm() {
@@ -151,7 +219,8 @@ function guideMessage() {
     "`!aide` ou `/aide` — Recevoir de l’aide et du soutien spirituel\n" +
     "`!suivi` — Demander un accompagnement spirituel\n" +
     "`!temoignage` — Partager un témoignage\n" +
-    "`!devotion` ou `/devotion` — Recevoir une dévotion avec un verset"
+    "`!devotion` ou `/devotion` — Recevoir une dévotion avec un verset\n" +
+    "`/quiz` — Répondre à une question biblique"
   );
 }
 
@@ -231,6 +300,55 @@ async function getVerse(reference) {
   );
 
   return `📖 **${reference}**\n\n${response.data.text.trim()}`;
+}
+
+async function quizMessage(interaction) {
+  const random = quizzes[Math.floor(Math.random() * quizzes.length)];
+
+  await interaction.reply(
+    `📖 **Quiz Biblique**\n\n` +
+    `❓ ${random.question}\n\n` +
+    `🇦 ${random.options[0]}\n` +
+    `🇧 ${random.options[1]}\n` +
+    `🇨 ${random.options[2]}\n` +
+    `🇩 ${random.options[3]}\n\n` +
+    `⏳ Vous avez 30 secondes pour répondre.\n` +
+    `Répondez avec **A, B, C, D** ou avec la réponse.`
+  );
+
+  const bonnesReponses = [
+    random.answer.toLowerCase(),
+    random.options.indexOf(random.answer) === 0 ? "a" : "",
+    random.options.indexOf(random.answer) === 1 ? "b" : "",
+    random.options.indexOf(random.answer) === 2 ? "c" : "",
+    random.options.indexOf(random.answer) === 3 ? "d" : ""
+  ].filter(Boolean);
+
+  const filter = m => !m.author.bot;
+
+  const collected = await interaction.channel.awaitMessages({
+    filter,
+    max: 1,
+    time: 30000
+  });
+
+  if (!collected.size) {
+    return interaction.followUp(
+      `⏰ Temps écoulé.\n\n✅ **Réponse :** ${random.answer}\n📖 **Référence :** ${random.reference}`
+    );
+  }
+
+  const response = collected.first().content.trim().toLowerCase();
+
+  if (bonnesReponses.some(rep => response.includes(rep))) {
+    return interaction.followUp(
+      `✅ Bonne réponse !\n\n📖 **Référence :** ${random.reference}`
+    );
+  }
+
+  return interaction.followUp(
+    `❌ Mauvaise réponse.\n\n✅ **Réponse :** ${random.answer}\n📖 **Référence :** ${random.reference}`
+  );
 }
 
 client.once(Events.ClientReady, () => {
@@ -320,6 +438,10 @@ client.on(Events.InteractionCreate, async interaction => {
 
   if (commandName === 'devotion') {
     await interaction.reply(devotionMessage());
+  }
+
+  if (commandName === 'quiz') {
+    await quizMessage(interaction);
   }
 
   if (commandName === 'verset') {
