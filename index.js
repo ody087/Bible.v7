@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, Events } = require('discord.js');
 const axios = require('axios');
 
 const client = new Client({
@@ -35,152 +35,211 @@ const psaumes = [
 
 let lastPsalmIndex = -1;
 
-client.once('ready', () => {
+function getRandomPsalm() {
+  let randomIndex;
+
+  do {
+    randomIndex = Math.floor(Math.random() * psaumes.length);
+  } while (randomIndex === lastPsalmIndex);
+
+  lastPsalmIndex = randomIndex;
+  return psaumes[randomIndex].text;
+}
+
+function guideMessage() {
+  return (
+    "📌 **Guide Bible.v7**\n\n" +
+    "`!guide` ou `/guide` — Voir le guide des commandes\n" +
+    "`!bonjour` — Message de bénédiction\n" +
+    "`!psaume` ou `/psaume` — Recevoir un psaume aléatoire\n" +
+    "`!verset Jean 14:6` ou `/verset` — Rechercher un verset biblique\n" +
+    "`!priere` ou `/priere` — Recevoir une courte prière\n" +
+    "`!jesus` ou `/jesus` — Recevoir le message du salut\n" +
+    "`!aide` ou `/aide` — Recevoir de l’aide et du soutien spirituel\n" +
+    "`!suivi` — Demander un accompagnement spirituel\n" +
+    "`!temoignage` — Partager un témoignage\n" +
+    "`!devotion` ou `/devotion` — Recevoir une courte dévotion"
+  );
+}
+
+function priereMessage() {
+  return (
+    "🙏 **Prière**\n\n" +
+    "Seigneur Jésus, couvrez cette personne de votre paix, guidez ses pas, fortifiez sa foi et remplissez son cœur de votre présence. Amen."
+  );
+}
+
+function jesusMessage() {
+  return (
+    "✝️ **L'ABC du SALUT**\n\n" +
+
+    "Le salut est simple et accessible à tous, mais c’est aussi un engagement sacré devant Dieu.\n\n" +
+
+    "**A — Admets que tu es un pécheur**\n" +
+    "Nous avons tous péché et nous avons besoin du pardon de Dieu.\n\n" +
+
+    "📖 Il est écrit dans **Romains 3:23** :\n" +
+    "« Car tous ont péché et sont privés de la gloire de Dieu. »\n\n" +
+
+    "**B — Crois en Jésus-Christ**\n" +
+    "Dieu vous aime. Jésus est mort pour vos péchés et il est ressuscité afin de vous donner la vie éternelle.\n\n" +
+
+    "📖 Il est écrit dans **Jean 3:16** :\n" +
+    "« Car Dieu a tant aimé le monde qu’il a donné son Fils unique, afin que quiconque croit en lui ne périsse point, mais qu’il ait la vie éternelle. »\n\n" +
+
+    "**C — Confesse que Jésus est Seigneur**\n" +
+    "Confessez Jésus-Christ comme Seigneur et Sauveur de votre vie.\n\n" +
+
+    "📖 Il est écrit dans **Romains 10:9** :\n" +
+    "« Si tu confesses de ta bouche le Seigneur Jésus et si tu crois dans ton cœur qu’il est ressuscité, tu seras sauvé. »\n\n" +
+
+    "🙏 **Prière à répéter à haute voix**\n\n" +
+
+    "Seigneur Jésus, je viens à vous aujourd’hui. Je reconnais que je suis pécheur et que j’ai besoin de votre pardon. Je crois que vous êtes mort pour mes péchés, que vous êtes ressuscité et que vous vivez éternellement. Je vous ouvre mon cœur. Pardonnez-moi, purifiez-moi, sauvez-moi et conduisez ma vie. Aujourd’hui, je confesse que Jésus-Christ est mon Seigneur et mon Sauveur. Amen.\n\n" +
+
+    "🤝 Si vous avez fait cette prière avec foi, écrivez `!suivi` afin que nous puissions vous accompagner spirituellement."
+  );
+}
+
+function aideMessage() {
+  return (
+    "🙏 **Aide et soutien spirituel**\n\n" +
+    "Nous sommes là pour vous écouter, prier avec vous et vous encourager dans votre marche avec Dieu.\n\n" +
+    "🙏 Vous pouvez aussi écrire `!suivi` si vous souhaitez être accompagné spirituellement."
+  );
+}
+
+function suiviMessage() {
+  return (
+    "🤝 **Demande de suivi spirituel reçue**\n\n" +
+    "Merci d’avoir fait cette démarche. Un membre de l’équipe pourra vous accompagner, prier avec vous et vous aider à grandir dans votre marche avec Dieu.\n\n" +
+    "🙏 Vous pouvez aussi écrire un message privé à un responsable du serveur."
+  );
+}
+
+function temoignageMessage() {
+  return (
+    "🙌 **Témoignage**\n\n" +
+    "Si Dieu a fait quelque chose dans votre vie, vous pouvez le partager ici pour encourager la communauté.\n\n" +
+    "Votre témoignage peut fortifier la foi de quelqu’un d’autre. ✨"
+  );
+}
+
+function devotionMessage() {
+  return (
+    "✨ **Dévotion du jour**\n\n" +
+    "Aujourd’hui, avançons avec foi. Même si nous ne voyons pas encore le chemin, Dieu marche devant nous. Faisons-lui confiance."
+  );
+}
+
+async function getVerse(reference) {
+  const response = await axios.get(
+    `https://bible-api.com/${encodeURIComponent(reference)}?translation=lsg`
+  );
+
+  return `📖 **${reference}**\n\n${response.data.text.trim()}`;
+}
+
+client.once(Events.ClientReady, () => {
   console.log(`Bible.v7 est connecté en tant que ${client.user.tag}`);
 });
 
-client.on('messageCreate', async message => {
-
+// ANCIENS COMMANDS AVEC !
+client.on(Events.MessageCreate, async message => {
   if (message.author.bot) return;
 
   const msg = message.content.toLowerCase();
 
-  // Bonjour
   if (msg === '!bonjour') {
     message.reply('Bonjour 👋 Que Dieu vous bénisse.');
   }
 
-  // Guide
   if (msg === '!guide') {
-    message.reply(
-      "📌 **Guide Bible.v7**\n\n" +
-      "`!guide` — Voir le guide des commandes\n" +
-      "`!bonjour` — Message de bénédiction\n" +
-      "`!psaume` — Recevoir un psaume aléatoire\n" +
-      "`!verset Jean 14:6` — Rechercher un verset biblique\n" +
-      "`!priere` — Recevoir une courte prière\n" +
-      "`!jesus` — Recevoir le message du salut\n" +
-      "`!aide` — Recevoir de l’aide et du soutien spirituel\n" +
-      "`!suivi` — Demander un accompagnement spirituel\n" +
-      "`!temoignage` — Partager un témoignage\n" +
-      "`!devotion` — Recevoir une courte dévotion"
-    );
+    message.reply(guideMessage());
   }
 
-  // Psaume aléatoire
   if (msg === '!psaume') {
-
-    let randomIndex;
-
-    do {
-      randomIndex = Math.floor(Math.random() * psaumes.length);
-    } while (randomIndex === lastPsalmIndex);
-
-    lastPsalmIndex = randomIndex;
-
-    message.reply(psaumes[randomIndex].text);
+    message.reply(getRandomPsalm());
   }
 
-  // Recherche de verset
   if (msg.startsWith('!verset ')) {
-
     const reference = message.content.slice(8).trim();
 
     try {
-
-      const response = await axios.get(
-        `https://bible-api.com/${encodeURIComponent(reference)}?translation=lsg`
-      );
-
-      message.reply(
-        `📖 **${reference}**\n\n${response.data.text.trim()}`
-      );
-
+      message.reply(await getVerse(reference));
     } catch (error) {
-
       message.reply(
         "🙏 Le verset demandé est introuvable.\n\n📖 Exemple : `!verset Jean 14:6`"
       );
-
     }
   }
 
-  // Prière
   if (msg === '!priere') {
-    message.reply(
-      "🙏 **Prière**\n\n" +
-      "Seigneur Jésus, couvrez cette personne de votre paix, guidez ses pas, fortifiez sa foi et remplissez son cœur de votre présence. Amen."
-    );
+    message.reply(priereMessage());
   }
 
-  // Salut
   if (msg === '!jesus') {
-    message.reply(
-      "✝️ **L'ABC du SALUT**\n\n" +
-
-      "Le salut est simple et accessible à tous, mais c’est aussi un engagement sacré devant Dieu.\n\n" +
-
-      "**A — Admets que tu es un pécheur**\n" +
-      "Nous avons tous péché et nous avons besoin du pardon de Dieu.\n\n" +
-
-      "📖 Il est écrit dans **Romains 3:23** :\n" +
-      "« Car tous ont péché et sont privés de la gloire de Dieu. »\n\n" +
-
-      "**B — Crois en Jésus-Christ**\n" +
-      "Dieu vous aime. Jésus est mort pour vos péchés et il est ressuscité afin de vous donner la vie éternelle.\n\n" +
-
-      "📖 Il est écrit dans **Jean 3:16** :\n" +
-      "« Car Dieu a tant aimé le monde qu’il a donné son Fils unique, afin que quiconque croit en lui ne périsse point, mais qu’il ait la vie éternelle. »\n\n" +
-
-      "**C — Confesse que Jésus est Seigneur**\n" +
-      "Confessez Jésus-Christ comme Seigneur et Sauveur de votre vie.\n\n" +
-
-      "📖 Il est écrit dans **Romains 10:9** :\n" +
-      "« Si tu confesses de ta bouche le Seigneur Jésus et si tu crois dans ton cœur qu’il est ressuscité, tu seras sauvé. »\n\n" +
-
-      "🙏 **Prière à répéter à haute voix**\n\n" +
-
-      "Seigneur Jésus, je viens à vous aujourd’hui. Je reconnais que je suis pécheur et que j’ai besoin de votre pardon. Je crois que vous êtes mort pour mes péchés, que vous êtes ressuscité et que vous vivez éternellement. Je vous ouvre mon cœur. Pardonnez-moi, purifiez-moi, sauvez-moi et conduisez ma vie. Aujourd’hui, je confesse que Jésus-Christ est mon Seigneur et mon Sauveur. Amen.\n\n" +
-
-      "🤝 Si vous avez fait cette prière avec foi, écrivez `!suivi` afin que nous puissions vous accompagner spirituellement."
-    );
+    message.reply(jesusMessage());
   }
 
-  // Aide spirituelle
   if (msg === '!aide') {
-    message.reply(
-      "🙏 **Aide et soutien spirituel**\n\n" +
-      "Nous sommes là pour vous écouter, prier avec vous et vous encourager dans votre marche avec Dieu.\n\n" +
-      "🙏 Vous pouvez aussi écrire `!suivi` si vous souhaitez être accompagné spirituellement."
-    );
+    message.reply(aideMessage());
   }
 
-  // Suivi
   if (msg === '!suivi') {
-    message.reply(
-      "🤝 **Demande de suivi spirituel reçue**\n\n" +
-      "Merci d’avoir fait cette démarche. Un membre de l’équipe pourra vous accompagner, prier avec vous et vous aider à grandir dans votre marche avec Dieu.\n\n" +
-      "🙏 Vous pouvez aussi écrire un message privé à un responsable du serveur."
-    );
+    message.reply(suiviMessage());
   }
 
-  // Témoignage
   if (msg === '!temoignage') {
-    message.reply(
-      "🙌 **Témoignage**\n\n" +
-      "Si Dieu a fait quelque chose dans votre vie, vous pouvez le partager ici pour encourager la communauté.\n\n" +
-      "Votre témoignage peut fortifier la foi de quelqu’un d’autre. ✨"
-    );
+    message.reply(temoignageMessage());
   }
 
-  // Dévotion
   if (msg === '!devotion') {
-    message.reply(
-      "✨ **Dévotion du jour**\n\n" +
-      "Aujourd’hui, avançons avec foi. Même si nous ne voyons pas encore le chemin, Dieu marche devant nous. Faisons-lui confiance."
-    );
+    message.reply(devotionMessage());
+  }
+});
+
+// NOUVO SLASH COMMANDS AVEC /
+client.on(Events.InteractionCreate, async interaction => {
+  if (!interaction.isChatInputCommand()) return;
+
+  const commandName = interaction.commandName;
+
+  if (commandName === 'guide') {
+    await interaction.reply(guideMessage());
   }
 
+  if (commandName === 'psaume') {
+    await interaction.reply(getRandomPsalm());
+  }
+
+  if (commandName === 'priere') {
+    await interaction.reply(priereMessage());
+  }
+
+  if (commandName === 'jesus') {
+    await interaction.reply(jesusMessage());
+  }
+
+  if (commandName === 'aide') {
+    await interaction.reply(aideMessage());
+  }
+
+  if (commandName === 'devotion') {
+    await interaction.reply(devotionMessage());
+  }
+
+  if (commandName === 'verset') {
+    const reference = interaction.options.getString('reference');
+
+    try {
+      await interaction.reply(await getVerse(reference));
+    } catch (error) {
+      await interaction.reply(
+        "🙏 Le verset demandé est introuvable.\n\n📖 Exemple : `Jean 14:6`"
+      );
+    }
+  }
 });
 
 client.login(process.env.DISCORD_TOKEN);
