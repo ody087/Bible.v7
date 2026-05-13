@@ -517,6 +517,7 @@ client.login(process.env.DISCORD_TOKEN);
 
 let twitchMessageCount = 0;
 let twitchQuizActif = false;
+let twitchScores = {};
 
 const twitchClient = new tmi.Client({
   options: { debug: true },
@@ -560,23 +561,45 @@ function lancerQuizTwitch(channel) {
 
     const response = userMessage.trim().toLowerCase();
 
-    if (bonnesReponses.some(rep => response.includes(rep))) {
-      twitchClient.say(
-        channel,
-        `✅ Yes, bonne réponse @${tags.username} ! 📖 Référence : ${random.reference}`
-      );
-    } else {
-      twitchClient.say(
-        channel,
-        `❌ Mauvaise réponse @${tags.username}. ✅ Réponse : ${random.answer} | 📖 Référence : ${random.reference}`
-      );
-    }
+  if (bonnesReponses.some(rep => response.includes(rep))) {
 
-    clearTimeout(timer);
-    twitchClient.removeListener('message', quizListener);
-    twitchQuizActif = false;
-  };
+  const user = tags.username;
 
+  if (!twitchScores[user]) {
+    twitchScores[user] = 0;
+  }
+
+  twitchScores[user]++;
+
+  twitchClient.say(
+    channel,
+    `✅ Yes, bonne réponse @${user} ! (${twitchScores[user]}/10) 📖 Référence : ${random.reference}`
+  );
+
+  if (twitchScores[user] >= 10) {
+
+    twitchClient.say(
+      channel,
+      `👑 Félicitations @${user} ! Tu viens d’atteindre 10 bonnes réponses bibliques !! 🎉🔥 Que Dieu te bénisse 🙏📖`
+    );
+
+    twitchScores[user] = 0;
+  }
+
+} else {
+
+  twitchClient.say(
+    channel,
+    `❌ Mauvaise réponse @${tags.username}. ✅ Réponse : ${random.answer} | 📖 Référence : ${random.reference}`
+  );
+}
+
+clearTimeout(timer);
+
+twitchClient.removeListener('message', quizListener);
+
+twitchQuizActif = false;
+    
   twitchClient.on('message', quizListener);
 
   const timer = setTimeout(() => {
