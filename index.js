@@ -534,28 +534,28 @@ twitchClient.on('message', async (channel, tags, message, self) => {
 
   const msg = message.toLowerCase();
 
-  twitchMessageCount++;
+twitchMessageCount++;
 
-  if (twitchMessageCount >= 5 && !twitchQuizActif) {
-    twitchMessageCount = 0;
-    twitchQuizActif = true;
+if (twitchMessageCount >= 5 && !twitchQuizActif) {
+  twitchMessageCount = 0;
+  twitchQuizActif = true;
 
-    const random = quizzes[Math.floor(Math.random() * quizzes.length)];
+  const random = quizzes[Math.floor(Math.random() * quizzes.length)];
 
+  twitchClient.say(
+    channel,
+    `📖 Quiz Biblique Automatique : ${random.question} | A: ${random.options[0]} | B: ${random.options[1]} | C: ${random.options[2]} | D: ${random.options[3]} | Répondez avec A, B, C ou D.`
+  );
+
+  setTimeout(() => {
     twitchClient.say(
       channel,
-      `📖 Quiz Biblique Automatique : ${random.question} | A: ${random.options[0]} | B: ${random.options[1]} | C: ${random.options[2]} | D: ${random.options[3]} | Répondez avec A, B, C ou D.`
+      `⏰ Temps écoulé. ✅ Réponse : ${random.answer} | 📖 Référence : ${random.reference}`
     );
 
-    setTimeout(() => {
-      twitchClient.say(
-        channel,
-        `✅ Réponse : ${random.answer} | 📖 Référence : ${random.reference}`
-      );
-
-      twitchQuizActif = false;
-    }, 30000);
-  }
+    twitchQuizActif = false;
+  }, 30000);
+}
 
   if (msg === '!bonjour') {
     twitchClient.say(channel, 'Bonjour 👋 Que Dieu vous bénisse.');
