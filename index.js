@@ -1,5 +1,6 @@
 const { Client, GatewayIntentBits, Events } = require('discord.js');
 const axios = require('axios');
+const tmi = require('tmi.js');
 
 const client = new Client({
   intents: [
