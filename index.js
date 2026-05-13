@@ -542,84 +542,55 @@ if (twitchMessageCount >= 5 && !twitchQuizActif) {
 
   const random = quizzes[Math.floor(Math.random() * quizzes.length)];
 
+  const bonnesReponses = [
+    random.answer.toLowerCase(),
+    random.options.indexOf(random.answer) === 0 ? "a" : "",
+    random.options.indexOf(random.answer) === 1 ? "b" : "",
+    random.options.indexOf(random.answer) === 2 ? "c" : "",
+    random.options.indexOf(random.answer) === 3 ? "d" : ""
+  ].filter(Boolean);
+
   twitchClient.say(
     channel,
-    `📖 Quiz Biblique Automatique : ${random.question} | A: ${random.options[0]} | B: ${random.options[1]} | C: ${random.options[2]} | D: ${random.options[3]} | Répondez avec A, B, C ou D.`
+    `📖 Quiz Biblique Automatique : ${random.question} | A: ${random.options[0]} | B: ${random.options[1]} | C: ${random.options[2]} | D: ${random.options[3]} | Vous avez 30 secondes.`
   );
 
-  setTimeout(() => {
-    twitchClient.say(
-      channel,
-      `⏰ Temps écoulé. ✅ Réponse : ${random.answer} | 📖 Référence : ${random.reference}`
-    );
+  const quizListener = (quizChannel, tags, userMessage, self) => {
+    if (self) return;
+    if (quizChannel !== channel) return;
 
-    twitchQuizActif = false;
-  }, 30000);
-}
+    const response = userMessage.trim().toLowerCase();
 
-  if (msg === '!bonjour') {
-    twitchClient.say(channel, 'Bonjour 👋 Que Dieu vous bénisse.');
-  }
-
-  if (msg === '!guide') {
-    twitchClient.say(channel, '📌 Commandes Bible.v7 : !bonjour, !guide, !psaume, !priere, !jesus, !aide, !suivi, !temoignage, !devotion, !verset Jean 3:16, !quiz');
-  }
-
-  if (msg === '!psaume') {
-    twitchClient.say(channel, getRandomPsalm().replace(/\n/g, ' '));
-  }
-
-  if (msg === '!priere') {
-    twitchClient.say(channel, priereMessage().replace(/\n/g, ' '));
-  }
-
-  if (msg === '!jesus') {
-    twitchClient.say(
-      channel,
-      "✝️ L'ABC du SALUT — A: Admets que tu es pécheur (Romains 3:23) | B: Crois en Jésus-Christ (Jean 3:16) | C: Confesse Jésus comme Seigneur (Romains 10:9) ❤️"
-    );
-  }
-
-  if (msg === '!aide') {
-    twitchClient.say(channel, aideMessage().replace(/\n/g, ' '));
-  }
-
-  if (msg === '!suivi') {
-    twitchClient.say(channel, suiviMessage().replace(/\n/g, ' '));
-  }
-
-  if (msg === '!temoignage') {
-    twitchClient.say(channel, temoignageMessage().replace(/\n/g, ' '));
-  }
-
-  if (msg === '!devotion') {
-    twitchClient.say(channel, devotionMessage().replace(/\n/g, ' '));
-  }
-
-  if (msg.startsWith('!verset ')) {
-    const reference = message.slice(8).trim();
-
-    try {
-      const verse = await getVerse(reference);
-      twitchClient.say(channel, verse.replace(/\n/g, ' '));
-    } catch (error) {
-      twitchClient.say(channel, '🙏 Verset introuvable. Exemple : !verset Jean 14:6');
-    }
-  }
-
-  if (msg === '!quiz') {
-    const random = quizzes[Math.floor(Math.random() * quizzes.length)];
-
-    twitchClient.say(
-      channel,
-      `📖 Quiz Biblique : ${random.question} | A: ${random.options[0]} | B: ${random.options[1]} | C: ${random.options[2]} | D: ${random.options[3]} | Répondez avec A, B, C ou D.`
-    );
-
-    setTimeout(() => {
+    if (bonnesReponses.some(rep => response.includes(rep))) {
       twitchClient.say(
         channel,
-        `✅ Réponse : ${random.answer} | 📖 Référence : ${random.reference}`
+        `✅ Yes, bonne réponse @${tags.username} ! 📖 Référence : ${random.reference}`
       );
-    }, 30000);
-  }
-});
+
+      twitchClient.removeListener('message', quizListener);
+      twitchQuizActif = false;
+    } else if (["a", "b", "c", "d"].includes(response)) {
+      twitchClient.say(
+        channel,
+        `❌ Mauvaise réponse @${tags.username}. ✅ Réponse : ${random.answer} | 📖 Référence : ${random.reference}`
+      );
+
+      twitchClient.removeListener('message', quizListener);
+      twitchQuizActif = false;
+    }
+  };
+
+  twitchClient.on('message', quizListener);
+
+  setTimeout(() => {
+    if (twitchQuizActif) {
+      twitchClient.say(
+        channel,
+        `⏰ Temps écoulé. ✅ Réponse : ${random.answer} | 📖 Référence : ${random.reference}`
+      );
+
+      twitchClient.removeListener('message', quizListener);
+      twitchQuizActif = false;
+    }
+  }, 30000);
+}
