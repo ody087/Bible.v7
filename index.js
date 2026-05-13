@@ -515,3 +515,68 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
+const twitchClient = new tmi.Client({
+  options: { debug: true },
+
+  identity: {
+    username: process.env.TWITCH_BOT_USERNAME,
+    password: process.env.TWITCH_OAUTH_TOKEN
+  },
+
+  channels: [process.env.TWITCH_CHANNEL]
+});
+
+twitchClient.connect();
+
+twitchClient.on('message', async (channel, tags, message, self) => {
+
+  if (self) return;
+
+  const msg = message.toLowerCase();
+
+  if (msg === '!psaume') {
+    twitchClient.say(channel, getRandomPsalm());
+  }
+
+  if (msg === '!priere') {
+    twitchClient.say(channel, priereMessage());
+  }
+
+  if (msg === '!devotion') {
+    twitchClient.say(channel, devotionMessage());
+  }
+
+  if (msg === '!jesus') {
+    twitchClient.say(
+      channel,
+      "✝️ Jésus-Christ vous aime ❤️"
+    );
+  }
+
+  if (msg.startsWith('!verset ')) {
+
+    const reference =
+    message.slice(8).trim();
+
+    try {
+
+      const verse =
+      await getVerse(reference);
+
+      twitchClient.say(
+        channel,
+        verse.replace(/\n/g, " ")
+      );
+
+    } catch (error) {
+
+      twitchClient.say(
+        channel,
+        "🙏 Verset introuvable. Exemple : !verset Jean 14:6"
+      );
+
+    }
+
+  }
+
+});
