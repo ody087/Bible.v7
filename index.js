@@ -617,10 +617,10 @@ twitchClient.on('message', async (channel, tags, message, self) => {
     );
 
     setTimeout(() => {
-      twitchClient.say(
-        channel,
-        `✅ Réponse : ${random.answer} | 📖 Référence : ${random.reference}`
-      );
-    }, 30000);
-  }
-});
+  twitchClient.say(
+    channel,
+    `⏰ Temps écoulé. ✅ Réponse : ${random.answer} | 📖 Référence : ${random.reference}`
+  );
+
+  twitchQuizActif = false;
+}, 30000);
