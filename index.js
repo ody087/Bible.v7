@@ -618,7 +618,9 @@ twitchClient.on('message', quizListener);
 
 twitchClient.on('message', async (channel, tags, message, self) => {
   if (self) return;
-
+if (tags.username === 'streamelements') return;
+if (tags.username === 'botrixofficial') return;
+if (tags.username === 'forgebiblebot') return;
   const msg = message.toLowerCase();
 
   if (msg === '!bonjour') {
