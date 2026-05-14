@@ -638,11 +638,16 @@ twitchClient.on('message', async (channel, tags, message, self) => {
   }
 
   if (msg === '!jesus') {
-    return twitchClient.say(
-      channel,
-      "✝️ L'ABC du SALUT — A: Admets que tu es pécheur (Romains 3:23) | B: Crois en Jésus-Christ (Jean 3:16) | C: Confesse Jésus comme Seigneur (Romains 10:9) ❤️"
-    );
-  }
+  const salut = jesusMessage().split('\n\n');
+
+  salut.forEach((part, index) => {
+    setTimeout(() => {
+      twitchClient.say(channel, cleanTwitch(part));
+    }, index * 1800);
+  });
+
+  return;
+}
 
   if (msg === '!aide') {
     return twitchClient.say(channel, cleanTwitch(aideMessage()));
