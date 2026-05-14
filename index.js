@@ -617,11 +617,15 @@ twitchClient.on('message', quizListener);
 }
 
 twitchClient.on('message', async (channel, tags, message, self) => {
-  if (self) return;
+if (self) return;
+
 if (tags.username === 'streamelements') return;
 if (tags.username === 'botrixofficial') return;
 if (tags.username === 'forgebiblebot') return;
-  const msg = message.toLowerCase();
+if (tags.username === 'wizebot') return;
+if (tags.username === 'nightbot') return;
+
+const msg = message.toLowerCase();
 
   if (msg === '!bonjour') {
     return twitchClient.say(channel, 'Bonjour 👋 Que Dieu vous bénisse.');
