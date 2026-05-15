@@ -561,7 +561,11 @@ function lancerQuizTwitch(channel) {
 
     const response = userMessage.trim().toLowerCase();
 
-  if (bonnesReponses.some(rep => response.includes(rep))) {
+if (!response.startsWith('rep:')) return;
+
+const rep = response.replace('rep:', '').trim();
+
+ if (bonnesReponses.includes(rep)) {
 
   const user = tags.username;
 
